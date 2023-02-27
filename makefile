@@ -7,7 +7,7 @@ ALLPROGS= test prog
 
 all: $(ALLPROGS) 
 
-test: listeChaine.o main_test.o
+test: listeChaine.o ex3.o main_test.o
 	$(CC) -o $@ $(CFLAGS) $^
 
 prog: listeChaine.o main_prog.o

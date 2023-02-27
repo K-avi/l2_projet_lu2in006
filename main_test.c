@@ -2,9 +2,11 @@
 #include <stdlib.h>
 
 #include "listeChaine.h"
+#include "ex3.h"
 
 int main(){
 
+//TESTS EX2
    /* List* liste_test= initList();
 
     insererFirst(liste_test,  buildCell("hehe"));
@@ -35,8 +37,8 @@ int main(){
     printf("le contenu est: %s\n", ctos(c_searchList_test));
 
     freeList(liste_test);
-    */
-//test q2.7: 
+    
+//test EX2q2.7: 
 
     List * liste_test_lecture = stol( "ah | bh");
 
@@ -47,7 +49,7 @@ int main(){
     free(string_testlect);
     
 
-//test q2.8: 
+//test EX2q2.8: 
 
     ltof( liste_test_lecture, "test.tmp");
 
@@ -64,6 +66,33 @@ int main(){
     freeList(liste_test_lecture);
     freeList(copie_liste_test_lecture);
 
+*/
+
+//TESTS EX3: 
+
+//q3.1: 
+
+    List * test_listdir= listdir("./");
+
+    char * str_testlisdir= ltos(test_listdir);
+
+    printf("%s\n", str_testlisdir);
+
+    freeList(test_listdir); 
+    free(str_testlisdir);
+
+//q3.2: 
+    int test_32_vrai= file_exists("main_test.c");
+
+    printf("test_32 %d\n", test_32_vrai);
+
+    int test_32_faux= file_exists("blablablibloblu");
+
+    printf("test_32 %d\n", test_32_faux);
+
+//q3.3 : 
+
+    cp("a.tmp", "b.tmp");
 
     return 0;
 }
