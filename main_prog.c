@@ -11,12 +11,12 @@ int hashFile(char * source, char * dest){
 
 		if(! (source && dest)) return -1;
 		
-		unsigned l1= strlen(source) , l2=strlen(dest);
+		unsigned l1= strnlen(source, 256) , l2=strnlen(dest, 256); //strnlen est plus "sur"
 		unsigned length= l1+l2 + 14;
 
 		char*  tmp = (char* ) calloc(length , sizeof(char));  
 
-		sprintf(tmp, "sha256sum %s > %s", source, dest);
+		snprintf(tmp, length,"sha256sum %s > %s", source, dest); // meme chose pour snprintf
 		
 		int ret= system(tmp);
 		
@@ -24,7 +24,7 @@ int hashFile(char * source, char * dest){
 
 		return ret; 
 
-}
+}//teste
 
 //q1.4: 
 
@@ -45,6 +45,7 @@ char*  sha256file( char * file){
 	hashFile(file, fname);
 
 	FILE * f = fopen( fname , "r"); 
+	if(!f) return NULL;
 
 	char * ret= calloc(256, sizeof(char)); 
 
@@ -54,7 +55,7 @@ char*  sha256file( char * file){
 	
 	system("rm tmp_filename*");
 	return ret; 
-}
+}//teste
 
 int main(){
 	//hashFile( "/home/ivan/Documents/L2/doc_s2/struct_donnees/projet/tmp1.tmp", "/home/ivan/Documents/L2/doc_s2/struct_donnees/projet/tmp2.tmp");
