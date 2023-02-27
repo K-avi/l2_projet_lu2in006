@@ -67,6 +67,7 @@ char * ctos(Cell* c ){
 char * ltos ( const List* l){
     if(!l) return NULL;
 
+    
     unsigned length=0; 
 
     List tmp=*l ; 
@@ -137,31 +138,46 @@ Cell * searchList(const List* L, char * str){
 //q2.7: 
 
 List* stol(char *s){
+
+    if(!s) return NULL;
+
     List * ret = initList();
 
     char * tmp1=s, *tmp2=s;
 
     char * tmp_dup=NULL;
 
-    while(tmp1){
+    unsigned lenght1=0, length2=0;
 
-        while (*tmp2!='|'){
+    while(*tmp1){
+ //   printf("tmp1 entree %s\n", tmp1);
+        while (*tmp2!='|' && *tmp2!='\0'){
             tmp2++;
-        }   
-        tmp_dup= strndup(tmp1, tmp2-tmp1); //peut etre -1
-
-        insererFirst(ret, buildCell(tmp_dup)); //attention
+            length2++;
+        }  
+        
+        tmp_dup= strndup(tmp1, length2-lenght1); //peut etre -1
+        lenght1=length2;
+      //  printf("length2 est %u , tmp_dup %s\n", length2, tmp_dup );
+        
+        if(tmp_dup){
+            insererFirst(ret, buildCell(tmp_dup)); //attention
+        }
 
         free(tmp_dup);
+
         tmp1=tmp2;
-        ++tmp1;
+        if(*tmp1){ //s'assure que l'on est bien a '|' et pas au caractere de fin de string '\0'
+            ++tmp1;
+        }
 
         tmp2=tmp1;
+
     }
 
     return ret; 
 
-}//pas teste 
+}//teste ; semble ok 
 
 
 //q2.8: 
@@ -170,13 +186,13 @@ List* stol(char *s){
 void ltof( List*l , char * path){
 
     FILE * f = fopen( path, "w");
-    char * list = ltos(l);
-    fprintf(f, "%s\n", list );
+    char * str_list = ltos(l);
+    fprintf(f, "%s\n", str_list );
 
-    free(l);
+    
     fclose(f);
-
-}//pas teste 
+    free(str_list);
+}//teste ; ok 
 
 List* ftol (char * path){
 
@@ -185,13 +201,28 @@ List* ftol (char * path){
     if(!f) return NULL;
 
     char list[256]; 
+   
+    if(!fgets( list, 256, f)){
+         printf("reached catching empty file\n");
+        fclose(f);
+        return NULL;
+    }
 
-    fgets( list, 256, f);
-
+   
     fclose(f);
-    return stol(list);
 
-}//pas teste 
+    unsigned size = strcspn(list, "\n"); 
+
+    //trouve la 1e occurrence du caractere de fin de ligne ; donc de la fin de la liste 
+    //(on suppose que les strings de data ne contiennent pas de \n)
+    char *clean_list= strndup( list, size);
+
+    List * ret= stol(clean_list);
+
+    free(clean_list);
+    return ret;
+
+}//teste ; semble ok
 
 
 
