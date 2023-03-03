@@ -90,12 +90,16 @@ char * ltos ( const List* l){
     snprintf( ret , length , "%s", ctos(tmp));
 
     tmp=tmp->next;
+
+    unsigned ret_length; 
+    //permet de garder trace de la longueur de ret pendant qu'on le "remplit" 
     while( tmp){ 
        
         //snprintf empeche ret de deborder et evite les erreurs si la longueur a mal ete calculee
         char * c =ctos(tmp); 
         if(c){
-            snprintf(ret +strnlen(ret, length) ,length, " | %s", c ); 
+            ret_length= strnlen( ret ,length);
+            snprintf(ret +ret_length ,length -ret_length, " | %s", c ); 
         }
         tmp=tmp->next;
     }

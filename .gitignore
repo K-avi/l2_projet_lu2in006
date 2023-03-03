@@ -1,4 +1,5 @@
 *.o
 test
-*.tmp
+prog
+*tmp*
 .vscode

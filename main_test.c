@@ -3,6 +3,7 @@
 
 #include "listeChaine.h"
 #include "ex3.h"
+#include "ex1.h"
 
 int main(){
 
@@ -94,5 +95,20 @@ int main(){
 
     cp("a.tmp", "b.tmp");
 
+//q3.4: 
+
+    char * hash= sha256file("tmp1.tmp");
+
+    char * hash_path= hashToPath(hash); 
+
+    printf("hash : %s\nhashpath: %s\n", hash , hash_path);
+
+    free(hash); 
+    free(hash_path);
+
+//q3.5: 
+
+    blobFile("tmp1.tmp");
+    
     return 0;
 }
