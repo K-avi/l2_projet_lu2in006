@@ -1,4 +1,4 @@
-CFLAGS = -g -Wall -Wextra -pedantic -Wno-unused-parameter -std=c11
+CFLAGS = -g -Wall -Wextra -pedantic -Wno-unused-parameter 
 #CFLAGS = -g -Wno-unused-parameter
 CC = gcc
 ALLPROGS= test prog
@@ -7,7 +7,7 @@ ALLPROGS= test prog
 
 all: $(ALLPROGS) 
 
-test: ex1.o listeChaine.o ex3.o main_test.o
+test: ex1.o listeChaine.o ex3.o ex4.o main_test.o
 	$(CC) -o $@ $(CFLAGS) $^
 
 prog: listeChaine.o ex1.o main_prog.o

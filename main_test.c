@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
+#include "ex4.h"
 #include "listeChaine.h"
 #include "ex3.h"
 #include "ex1.h"
@@ -68,7 +70,7 @@ int main(){
     freeList(copie_liste_test_lecture);
 
 */
-
+/*
 //TESTS EX3: 
 
 //q3.1: 
@@ -109,6 +111,40 @@ int main(){
 //q3.5: 
 
     blobFile("tmp1.tmp");
+*/
+
+//EX4: 
+
+//q.1:
+    WorkFile * wfile= createWorkFile("test.tmp");
     
+    wfile->hash= strndup("adffeafefea", 256);
+//q.2:
+    char * wfile_string= wfts (wfile);
+   
+    printf("%s\n",wfile_string);
+//q.3:
+
+    WorkFile * wfile1= stwf(wfile_string);
+    printf("%s %s %d\n", wfile1->name, wfile1->hash, wfile1->mode);
+
+//q.4:
+
+    WorkTree * wt= initWorkTree();
+
+    wt->tab[0].hash= strndup("adffeafefea", 256);
+    wt->tab[0].name= strndup("test.tmp", 256);
+    wt->tab[0].mode=4;
+    wt->n++;
+    freeWorkFile(wfile);
+    freeWorkFile(wfile1);
+    free(wfile_string);
+
+    int valtrue = inWorkTree( wt, "test.tmp"), valfalse= inWorkTree(wt, "testerkokz");
+
+    printf(" valtrue est :%d\nvalfalse est : %d\n",valtrue, valfalse);
+
+    freeWorkTree(wt);
+
     return 0;
 }

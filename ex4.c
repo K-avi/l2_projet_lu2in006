@@ -40,7 +40,7 @@ WorkFile* createWorkFile(const char* name){
     ret->mode= 0;
 
     return ret;
-}//pas teste 
+}//teste ; ok
 
 //EX4.2: 
 
@@ -61,7 +61,7 @@ char* wfts(WorkFile* wf){
     snprintf(ret, length_hash+length_name+5, "%s\t%s\t%s" , wf->name, wf->hash, mode);
 
     return ret;
-}//pas teste 
+}//teste ; ok
 
 //EX4.3: 
 
@@ -77,7 +77,7 @@ WorkFile* stwf(const char* ch){
     ret->mode = atoi(mode);
 
     return ret;
-}//pas teste
+}//teste ; ok
 
 
 //EX4.4: 
@@ -89,8 +89,9 @@ WorkTree* initWorkTree(){
    ret->size= WTREE_SIZE; 
    ret->tab= calloc(16, sizeof(WorkTree));
 
+
    return ret;
-}//pas teste 
+}//teste ; semble ok
 
 //EX4.5:
 
@@ -100,10 +101,34 @@ int inWorkTree(WorkTree* wt, char* name){
     if(! (wt && name))  return -1;
     if(!wt->tab) return -1;
 
-    for (int i= 0; i<wt->size; i++){
+    for (int i= 0; i<wt->n; i++){
         if(!strncmp( name, wt->tab[i].name, 256)){
             return i;
         }
     }
     return -1;
-}//pas teste 
+}//teste ; ok
+
+
+//Pas demande mais necessaire/utile
+
+void freeWorkFile(WorkFile * wfile){
+
+    if(!wfile) return;
+
+    if(wfile->hash) free(wfile->hash);
+    if(wfile->name) free(wfile->name);
+
+    free(wfile);
+}//teste ok 
+
+void freeWorkTree (WorkTree* wtree){
+    if(!wtree) return;
+    for(unsigned i=0; i<wtree->n; i++){
+        
+        if(wtree->tab[i].name) free(wtree->tab[i].name); 
+        if(wtree->tab[i].hash)free(wtree->tab[i].hash);
+    }
+    free(wtree->tab);
+    free(wtree);
+}//teste ; pas sur

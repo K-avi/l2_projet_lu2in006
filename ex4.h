@@ -24,6 +24,11 @@ extern WorkFile* stwf(const char* ch); //ex4.3
 
 extern WorkTree* initWorkTree() ; //ex4.4
 
-extern int inWorkTree(WorkTree* wt, char* name);
+extern int inWorkTree(WorkTree* wt, char* name); //ex4.5
+
+//necessaire ms en + 
+
+extern void freeWorkFile(WorkFile * wfile);
+extern void freeWorkTree (WorkTree* wtree);
 
 #endif
