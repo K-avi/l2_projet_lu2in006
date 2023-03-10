@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "ex4.h"
+#include "ex5.h"
 #include "listeChaine.h"
 #include "ex3.h"
 #include "ex1.h"
@@ -126,7 +127,7 @@ int main(){
 //q.3:
 
     WorkFile * wfile1= stwf(wfile_string);
-    printf("%s %s %d\n", wfile1->name, wfile1->hash, wfile1->mode);
+  //  printf("%s %s %d\n", wfile1->name, wfile1->hash, wfile1->mode);
 
 //q.4:
 
@@ -146,16 +147,16 @@ int main(){
 
 //q.6: 
 
-    appendWorkTree(wt, "yipee.tmp", "afepokfpofea", 777);
-    appendWorkTree(wt, "yipeekaye.tmp", "aaapazzafepokfpofea", 777);
+    appendWorkTree(wt, "yipeekaye.titi", "afepokfpofea", 777);
+    appendWorkTree(wt, "yipeekaye.toto", "aaapazzafepokfpofea", 777);
 
-    printf("pointer after append is : %s\n", wt->tab[1].name);
+  //  printf("pointer after append is : %s\n", wt->tab[1].name);
 
 //q.7: 
 
     char * test_wtts = wtts(wt);
 
-    printf(" test q7 :\n%s", test_wtts);
+  //  printf(" test q7 :\n%s", test_wtts);
 
 
 //q4.8 : 
@@ -165,20 +166,31 @@ int main(){
 
      char * test_wtts1 = wtts(test_stwt);
 
-    printf(" test q8 :\n%s", test_wtts1);
+//  printf(" test q8 :\n%s", test_wtts1);
     
 //q.9: 
 
     int test_q9 = wttf(test_stwt, "testq9.tmp");
 
-    printf("testq9: %d\n", test_q9);
+//    printf("testq9: %d\n", test_q9);
 
 //q10: 
 
     WorkTree* testq10= ftwt("testq9.tmp");
 
     char * str_test_q10 = wtts(testq10);
-    printf("testq10: \n%s", str_test_q10);
+    //printf("testq10: \n%s", str_test_q10);
+
+
+/* EX5 :*/
+
+    blobWorkTree(testq10);
+
+//q1:
+
+//q2: 
+
+//q3: 
 
 //liberation de tt 
     freeWorkTree(wt);
@@ -192,13 +204,6 @@ int main(){
     free(str_test_q10);
     freeWorkTree(testq10);
     
-/* EX5 :*/
-
-//q1:
-
-//q2: 
-
-//q3: 
 
     return 0;
 }
