@@ -26,9 +26,22 @@ extern WorkTree* initWorkTree() ; //ex4.4
 
 extern int inWorkTree(WorkTree* wt, char* name); //ex4.5
 
-//necessaire ms en + 
+extern int appendWorkTree(WorkTree* wt, char* name, char* hash, int mode); //EX4.6
+
+extern char* wtts(WorkTree* wt) ; //ex4.7
+
+extern WorkTree * wt_from_string( char * str) ;// ex4.8
+
+extern int wttf(WorkTree * wt , char * file); //ex4.9
+
+extern WorkTree * ftwt( char * file); //ex4.10
+
+//necessaire ms pas demande
 
 extern void freeWorkFile(WorkFile * wfile);
 extern void freeWorkTree (WorkTree* wtree);
+
+
+
 
 #endif
