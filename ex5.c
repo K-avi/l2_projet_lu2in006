@@ -93,7 +93,6 @@ char * blobWorkTree ( WorkTree * wt){
     free(syscall); 
     free(directory_name);
     free(path); 
-    free(hash);
 
     system("rm wt.tmp");
 
@@ -175,9 +174,12 @@ char * saveWorkTree( WorkTree * wt , char * path){
         }
 
     }
+    
     char * ret= blobWorkTree(wt);
+    free(path_with_slash);
+    free(curname_with_path);
     return ret;
-}//pas fini 
+}//teste ; semble ok ? 
 
 void restoreWorkTree(WorkTree *wt, char *path){
     

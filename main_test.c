@@ -147,8 +147,8 @@ int main(){
 
 //q.6: 
 
-    appendWorkTree(wt, "yipeekaye.titi", "afepokfpofea", 777);
-    appendWorkTree(wt, "yipeekaye.toto", "aaapazzafepokfpofea", 777);
+    appendWorkTree(wt, "ex5.c", "afepokfpofea", 777);
+    appendWorkTree(wt, "ex5.h", "aaapazzafepokfpofea", 777);
 
   //  printf("pointer after append is : %s\n", wt->tab[1].name);
 
@@ -156,7 +156,7 @@ int main(){
 
     char * test_wtts = wtts(wt);
 
-  //  printf(" test q7 :\n%s", test_wtts);
+    printf(" test q7 :\n%s", test_wtts);
 
 
 //q4.8 : 
@@ -170,7 +170,7 @@ int main(){
     
 //q.9: 
 
-    int test_q9 = wttf(test_stwt, "testq9.tmp");
+    //int test_q9 = wttf(test_stwt, "testq9.tmp");
 
 //    printf("testq9: %d\n", test_q9);
 
@@ -184,11 +184,13 @@ int main(){
 
 /* EX5 :*/
 
-    blobWorkTree(testq10);
-
 //q1:
 
+    //blobWorkTree(testq10);
+
 //q2: 
+
+   char * test_5_2 = saveWorkTree(wt, "/home/ivan/Documents/L2/doc_s2/struct_donnees/projet");
 
 //q3: 
 
@@ -201,6 +203,7 @@ int main(){
     freeWorkTree(test_stwt);
     free(test_wtts1);
 
+    free(test_5_2);
     free(str_test_q10);
     freeWorkTree(testq10);
     
