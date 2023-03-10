@@ -36,6 +36,11 @@ extern int wttf(WorkTree * wt , char * file); //ex4.9
 
 extern WorkTree * ftwt( char * file); //ex4.10
 
+
+extern int getChmod(const char * path); //pour ex5
+
+extern void setMode ( int mode , char * path ) ; //pour ex5
+
 //necessaire ms pas demande
 
 extern void freeWorkFile(WorkFile * wfile);

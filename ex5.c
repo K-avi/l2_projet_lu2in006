@@ -1,6 +1,8 @@
 #include "ex5.h"
 #include "ex3.h"
 #include "ex4.h"
+#include "ex1.h"
+#include "listeChaine.h"
 
 #include <stddef.h>
 #include <stdlib.h>
@@ -143,10 +145,33 @@ char * saveWorkTree( WorkTree * wt , char * path){
 
              blobFile(curname_with_path);
 
-        }else if(isDirectory(curname_with_path)){
-            WorkTree * newWT;
+             wt->tab[i].mode= getChmod(curname_with_path);
 
-           char * saved_name = saveWorkTree(newWT, curname_with_path);
+             if(wt->tab[i].hash) free(wt->tab[i].hash);
+             wt->tab[i].hash= sha256file(curname_with_path);
+
+        }else if(isDirectory(curname_with_path)){
+
+            WorkTree * newWT;
+            List * list_curdir = listdir(curname_with_path);
+            List tmp=*list_curdir;
+            
+            while(tmp){ //construis newWT
+                appendWorkTree(newWT, tmp->data, NULL, getChmod(tmp->data) );
+                tmp=tmp->next;
+            }
+            freeList(list_curdir);
+
+           char * saved_name = saveWorkTree(newWT, curname_with_path); //appl recursif
+
+           if(wt->tab[i].hash) free(wt->tab[i].hash);
+           wt->tab[i].hash=strdup(saved_name);
+
+           wt->tab[i].mode=getChmod(saved_name);
+
+           free(saved_name);
+           freeWorkTree(newWT);
+        
         }
 
     }
