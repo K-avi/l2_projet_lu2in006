@@ -183,4 +183,44 @@ char * saveWorkTree( WorkTree * wt , char * path){
 
 void restoreWorkTree(WorkTree *wt, char *path){
     
-}
+    if (!(wt && path)) return;
+    if(wt->n > wt->size) return;
+
+//doit recuperer path correspondant au hash ; puis hash pour verifier 
+
+    char * path_hash;
+
+    char path_target [512];
+
+    for(int i=0; i<wt->n; i++){
+        path_hash =hashToPath(wt->tab[i].hash);
+
+        //vide et remplis path target ; on suppose que 512 char suffisent
+        memset(path_target,0, 512);
+        snprintf(path_target, 512, "%s%s", path, wt->tab[i].name);
+
+        if(!strstr(path_hash, ".t") ){ 
+        //strstr permet de chercher '.t' dans la chaine ; on suppose que le hash ne permet pas de creer ce nom
+        //et qu'un fichier contenant .t est FORCEMENT un worktree 
+
+
+           cp(path_hash, path_target);
+           setMode(wt->tab[i].mode, path_target);
+
+        }else { 
+
+            WorkTree * newWT= wt_from_string(path_hash);
+
+            char newPath[512];
+
+            snprintf(newPath, 512, "%s%s", path, wt->tab[i].name);
+
+            restoreWorkTree(newWT, newPath);
+            freeWorkTree(newWT);
+
+        }
+        free(path_hash);
+    }   
+
+    return;
+}//fini? pas teste

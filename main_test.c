@@ -194,6 +194,16 @@ int main(){
 
 //q3: 
 
+    WorkTree * wt_ex5 =initWorkTree();
+
+
+    appendWorkTree(wt_ex5, "testDir", NULL, 777);
+    appendWorkTree(wt_ex5, "ex5.c", NULL, 777);
+
+    saveWorkTree(wt, "/home/ivan/Documents/autres");
+
+    restoreWorkTree(NULL,NULL);
+
 //liberation de tt 
     freeWorkTree(wt);
     freeWorkFile(wfile);
