@@ -52,7 +52,7 @@ char* wfts(WorkFile* wf){
 
     char mode[4];
 
-    snprintf(mode, 3, "%d", wf->mode);
+    snprintf(mode, 3, "%o", wf->mode);
     mode[3]= '\0';
 
     unsigned length_name = strnlen(wf->name, 256), length_hash= strlen(wf->hash);
@@ -69,12 +69,13 @@ WorkFile* stwf(const char* ch){
 
     if(!ch) return NULL;
 
-    char name[256], hash[256], mode[4];  
-    sscanf(ch, "%255s\t%255s\t%3s", name, hash , mode );
+    char name[256], hash[256];
+    int mode;
+    sscanf(ch, "%255s\t%255s\t%o", name, hash , &mode );
 
     WorkFile* ret= createWorkFile(name);
     ret->hash= strndup(hash, 256); 
-    ret->mode = atoi(mode);
+    ret->mode = mode;
 
     return ret;
 }//teste ; ok
@@ -88,7 +89,7 @@ WorkTree* initWorkTree(){
    ret->n=0;
    ret->size= WTREE_SIZE; 
    ret->tab= (WorkFile*) malloc(16*sizeof(WorkFile));
-
+   
    return ret;
 }//teste ; semble ok
 
@@ -145,8 +146,8 @@ char* wfts_VAR(WorkFile* wf){
 
     char mode[4];
 
-    snprintf(mode, 3, "%d", wf->mode);
-    mode[3]= '\0';
+    snprintf(mode, 3, "%o", wf->mode);
+    
 
     unsigned length_name = strnlen(wf->name, 256), length_hash= strlen(wf->hash);
 
@@ -204,7 +205,7 @@ WorkTree * wt_from_string( char * str){
     int mode;
 
     while(curTok){
-        sscanf(curTok, "%255s\t%255s\t%d", name, hash, &mode);
+        sscanf(curTok, "%255s\t%255s\t%o", name, hash, &mode);
         appendWorkTree(ret, name, hash, mode);
         curTok= strtok(NULL, separator);
     }
@@ -257,7 +258,7 @@ WorkTree * ftwt( char * file){
 
     while(fgets(line, 1024, f)){
 
-        sscanf(line, "%255s\t%255s\t%d", name, hash, &mode);
+        sscanf(line, "%255s\t%255s\t%o", name, hash, &mode);
         appendWorkTree(ret, name, hash, mode);
 
     }

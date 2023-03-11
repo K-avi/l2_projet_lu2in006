@@ -115,7 +115,7 @@ int main(){
 */
 
 //EX4: 
-
+/*
 //q.1:
     WorkFile * wfile= createWorkFile("test.tmp");
     
@@ -142,7 +142,7 @@ int main(){
 //q.5: 
     int valtrue = inWorkTree( wt, "test.tmp"), valfalse= inWorkTree(wt, "testerkokz");
 
-    printf(" valtrue est :%d\nvalfalse est : %d\n",valtrue, valfalse);
+  //  printf(" valtrue est :%d\nvalfalse est : %d\n",valtrue, valfalse);
 
 
 //q.6: 
@@ -156,7 +156,7 @@ int main(){
 
     char * test_wtts = wtts(wt);
 
-    printf(" test q7 :\n%s", test_wtts);
+  //  printf(" test q7 :\n%s", test_wtts);
 
 
 //q4.8 : 
@@ -181,7 +181,7 @@ int main(){
     char * str_test_q10 = wtts(testq10);
     //printf("testq10: \n%s", str_test_q10);
 
-
+*/
 /* EX5 :*/
 
 //q1:
@@ -190,32 +190,42 @@ int main(){
 
 //q2: 
 
-   char * test_5_2 = saveWorkTree(wt, "/home/ivan/Documents/L2/doc_s2/struct_donnees/projet");
+  // char * test_5_2 = saveWorkTree(wt, "/home/ivan/Documents/L2/doc_s2/struct_donnees/projet");
 
 //q3: 
 
-    WorkTree * wt_ex5 =initWorkTree();
+   WorkTree * wt_ex5 =initWorkTree();
 
 
-    appendWorkTree(wt_ex5, "testDir", NULL, 777);
-    appendWorkTree(wt_ex5, "ex5.c", NULL, 777);
+   appendWorkTree(wt_ex5, "testDir", NULL, 777);
+   // appendWorkTree(wt_ex5, "ex5.c", NULL, 777);
+   char * path =saveWorkTree(wt_ex5, "/tmp/projetSD");
+    free(path);
+     
+     
+   
+   
 
-    saveWorkTree(wt, "/home/ivan/Documents/autres");
-
-    restoreWorkTree(NULL,NULL);
-
+    char * strWTex5= wtts (wt_ex5);
+   printf("%s\n", strWTex5);
+   free(strWTex5);
+    
+   restoreWorkTree(wt_ex5, "/tmp/projetSDrecover");
+freeWorkTree(wt_ex5);
 //liberation de tt 
-    freeWorkTree(wt);
+   /* freeWorkTree(wt);
     freeWorkFile(wfile);
     freeWorkFile(wfile1);
     free(wfile_string);
     free(test_wtts);
     freeWorkTree(test_stwt);
-    free(test_wtts1);
+    free(test_wtts1);*/
 
-    free(test_5_2);
-    free(str_test_q10);
-    freeWorkTree(testq10);
+   
+
+   // free(test_5_2);
+   // free(str_test_q10);
+   // freeWorkTree(testq10);
     
 
     return 0;

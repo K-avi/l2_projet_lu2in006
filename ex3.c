@@ -18,11 +18,12 @@ List* listdir(char* root_dir){
     if(!dir) return NULL;
 
     struct dirent * entry;
-    
+   
     List * ret= initList();
     while ( (entry = readdir(dir)) ){
-        
-        insererFirst( ret, buildCell(entry->d_name));
+        if ( (entry->d_type==DT_DIR || entry->d_type==DT_REG) && strcmp(entry->d_name, "..") && strcmp(entry->d_name, ".")){
+            insererFirst( ret, buildCell(entry->d_name));
+        }
     }
 
     closedir(dir);
@@ -53,13 +54,15 @@ void cp (const char *from , const char * to){
     j'ai remplace par l'ordre de cp dans la commande shell 
     du meme nom
     */
-
-    if(!from) return;
+  //  printf("cp %s %s \n", from ,to);
+    if(!(from && to)) return;
 
     FILE *source = fopen(from, "r");
     if(!source) return;
 
     FILE * dest = fopen(to, "w");
+   
+    if(!dest) { fclose(source) ; return;}
     
     char line[256];
 
@@ -81,7 +84,7 @@ char* hashToPath(char* hash){
     */
  
     if(!hash) return NULL; //hash est null
-    
+   
     unsigned hash_length = strnlen(hash, 256);
 
     if(hash_length<=2) return NULL; //hash n'est pas valide car trop court

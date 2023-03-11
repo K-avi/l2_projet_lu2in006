@@ -143,7 +143,7 @@ char * saveWorkTree( WorkTree * wt , char * path){
         if(isFile(curname_with_path)){
 
              blobFile(curname_with_path);
-
+//printf("in saving getCh %s %d\n", wt->tab[i].name,getChmod(curname_with_path));
              wt->tab[i].mode= getChmod(curname_with_path);
 
              if(wt->tab[i].hash) free(wt->tab[i].hash);
@@ -151,12 +151,22 @@ char * saveWorkTree( WorkTree * wt , char * path){
 
         }else if(isDirectory(curname_with_path)){
 
-            WorkTree * newWT;
+            WorkTree * newWT= initWorkTree();
             List * list_curdir = listdir(curname_with_path);
             List tmp=*list_curdir;
-            
+          //  printf("cur is %s\n", curname_with_path);
             while(tmp){ //construis newWT
-                appendWorkTree(newWT, tmp->data, NULL, getChmod(tmp->data) );
+                
+                if(tmp->data){
+                    
+                    //solution pas propre mais trop fatigue de debugger pour faire mieux
+                    char path_tmpdata [512]; 
+                    memset(path_tmpdata, 0, 512);
+                    sprintf(path_tmpdata, "%s/%s", curname_with_path, tmp->data);
+//printf("tmpdata is %s %d\n", path_tmpdata, getChmod(path_tmpdata));
+                    appendWorkTree(newWT, tmp->data, NULL, getChmod(path_tmpdata) );
+                }
+                
                 tmp=tmp->next;
             }
             freeList(list_curdir);
@@ -165,8 +175,8 @@ char * saveWorkTree( WorkTree * wt , char * path){
 
            if(wt->tab[i].hash) free(wt->tab[i].hash);
            wt->tab[i].hash=strdup(saved_name);
-
-           wt->tab[i].mode=getChmod(saved_name);
+//printf("in end of save la %s %d \n ", saved_name, getChmod(curname_with_path));
+           wt->tab[i].mode=getChmod(curname_with_path);
 
            free(saved_name);
            freeWorkTree(newWT);
@@ -193,27 +203,42 @@ void restoreWorkTree(WorkTree *wt, char *path){
     char path_target [512];
 
     for(int i=0; i<wt->n; i++){
+        
+    //    printf("in restore loop %s %d\n" , wt->tab[i].name, i);
+        //if(!wt->tab[i].hash) { i++ ;continue;}
+        
         path_hash =hashToPath(wt->tab[i].hash);
+       // if(!path_hash) {  i++ ;continue;}
 
         //vide et remplis path target ; on suppose que 512 char suffisent
         memset(path_target,0, 512);
-        snprintf(path_target, 512, "%s%s", path, wt->tab[i].name);
-
+        snprintf(path_target, 512, "%s/%s", path, wt->tab[i].name);
+  
         if(!strstr(path_hash, ".t") ){ 
         //strstr permet de chercher '.t' dans la chaine ; on suppose que le hash ne permet pas de creer ce nom
         //et qu'un fichier contenant .t est FORCEMENT un worktree 
 
-
+        //    printf("in loop, cp file, %s %s\n\n", path_hash, path_target);
            cp(path_hash, path_target);
+       //   printf("path target in restore mode %d %s %s\n", wt->tab[i].mode , wt->tab[i].name,path_target);
            setMode(wt->tab[i].mode, path_target);
 
         }else { 
-
-            WorkTree * newWT= wt_from_string(path_hash);
+//printf("path hash: %s\n", path_hash);
+            WorkTree * newWT= ftwt(path_hash);
 
             char newPath[512];
 
-            snprintf(newPath, 512, "%s%s", path, wt->tab[i].name);
+            snprintf(newPath, 512, "%s/%s", path, wt->tab[i].name);
+            
+            if(!isDirectory(newPath)){
+
+                char * syscall= malloc((7+strlen(newPath))* sizeof(char));
+
+                sprintf(syscall, "mkdir %s",newPath);
+                system(syscall); 
+                free(syscall);
+            }
 
             restoreWorkTree(newWT, newPath);
             freeWorkTree(newWT);
