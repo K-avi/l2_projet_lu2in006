@@ -9,6 +9,8 @@
 extern char * blobWorkTree (WorkTree* wt); //q1
 extern char * saveWorkTree (WorkTree * wt, char * path); //q2
 
-extern void restoreWorkTree( WorkTree * wt , char * path);
+extern void restoreWorkTree( WorkTree * wt , char * path); //q3
+
+extern int isDirectory(const char *path) ; //globalement utile
 
 #endif
