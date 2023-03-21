@@ -3,3 +3,4 @@ test
 prog
 *tmp*
 .vscode
+*.test

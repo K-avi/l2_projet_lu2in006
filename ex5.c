@@ -94,7 +94,7 @@ char * blobWorkTree ( WorkTree * wt){
     free(directory_name);
     free(path); 
 
-    system("rm wt.tmp");
+    remove("wt.tmp");
 
     return hash;
 }

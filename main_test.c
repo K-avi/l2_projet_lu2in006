@@ -7,6 +7,7 @@
 #include "listeChaine.h"
 #include "ex3.h"
 #include "ex1.h"
+#include "ex6.h"
 
 int main(){
 
@@ -183,7 +184,7 @@ int main(){
 
 */
 /* EX5 :*/
-
+/*
 //q1:
 
     //blobWorkTree(testq10);
@@ -213,20 +214,103 @@ int main(){
    restoreWorkTree(wt_ex5, "/tmp/projetSDrecover");
 freeWorkTree(wt_ex5);
 //liberation de tt 
-   /* freeWorkTree(wt);
+    freeWorkTree(wt);
     freeWorkFile(wfile);
     freeWorkFile(wfile1);
     free(wfile_string);
     free(test_wtts);
     freeWorkTree(test_stwt);
-    free(test_wtts1);*/
-
+    free(test_wtts1);
    
 
    // free(test_5_2);
    // free(str_test_q10);
    // freeWorkTree(testq10);
+*/
+    /* EXERCICE 6 : */
+
+//q1:
+
+    kvp * testkvp= createKeyVal("test", "tetest");
+
+
+//q2:
+    char * testKVTS= kvts(testkvp);
+    printf("test KVTS: %s\n", testKVTS);
+
+    kvp * testSTKV= stkv(testKVTS);
+
+    printf("testSTKV : %s %s\n" ,testSTKV->key,  testSTKV->value);
+//q3: 
+    Commit * testInitCommit = initCommit(); 
+
+//q4: 
+
+    unsigned long hashTest= sdbm((unsigned char* )"test");
+    printf("hashTest: %lu \n" ,hashTest);
     
+//q5: 
+
+    commitSet(testInitCommit, "testo", "testi");
+    commitSet(testInitCommit, "testo", "testu");
+    commitSet(testInitCommit, "testa", "testu");
+
+
+//q6: 
+
+    Commit* testCreateCommit = createCommit("zoifepojojpjpzjf");
+
+//q7: 
+
+    char * testCommitGet = commitGet(testInitCommit, "testo");
+    printf("testCommitGet : %s\n", testCommitGet);
+
+   char * testCommitGet1= commitGet(testInitCommit, "testatataat");
+    printf("testCommitGet1 : %s\n", testCommitGet1);
+//q8: 
+
+    char * testCTS= cts(testInitCommit);
+
+    printf("testCTS:\n\n%s\n", testCTS);
+
+    Commit * testSTC = stc(testCTS);
+
+    free(testCTS);
+
+     char * testSTCstr= cts(testSTC);
+
+    printf("testSTCstr:\n\n%s\n", testSTCstr);
+//q9: 
+
+    ctf(testInitCommit, "ex6q9.test");
+
+    Commit * testFTC= ftc("ex6q9.test");
+
+    char * testFTCstr= cts(testFTC);
+
+    printf("testFTCstr\n%s", testFTCstr); 
+
+//q10: 
+
+    char * testblobCommit = blobCommit(testInitCommit);
+
+    printf("testblobCommit %s\n", testblobCommit);
+
+    free(testblobCommit);
+    free(testFTCstr);
+    freeCommit(testFTC);
+
+    free(testSTCstr);
+
+    freeCommit(testSTC);
+
+    free(testKVTS);
+    freeKeyVal(testkvp);
+    freeKeyVal(testSTKV);
+    freeCommit(testInitCommit);
+    freeCommit(testCreateCommit);
+
+
 
     return 0;
 }
