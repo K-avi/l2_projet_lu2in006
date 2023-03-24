@@ -227,6 +227,4 @@ void myGitCommit(char *branch_name, char *message){
     freeWorkTree(wt);
     remove(".add"); //supprimer .add
 
-}
-
-//j'ai beaucoup de questions
+}//teste semble ok!!!!!!!
