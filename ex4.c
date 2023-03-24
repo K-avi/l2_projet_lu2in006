@@ -145,7 +145,7 @@ char* wfts_VAR(WorkFile* wf){
     if(! (wf->hash && wf->name)) return NULL;
 
     char mode[4];
-
+    memset(mode, 0, 4);
     snprintf(mode, 3, "%o", wf->mode);
     
 

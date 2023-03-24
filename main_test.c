@@ -322,26 +322,31 @@ freeWorkTree(wt_ex5);
     createUpdateRef("HEAD", "abababa");
     createUpdateRef("bagaba", "abababagababa");
     createUpdateRef("HEAD", "babababi");
+    createUpdateRef("HEAD", "");
 //q3: 
     deleteRef("bagaba");
      deleteRef("bagaba");
 
 //q4: 
 
-    char * testGetRef= getRef("HEAD");
-    char * testGetRefNull= getRef("je n'existe pas!");
-    printf( "testGetRef %s\n", testGetRef);
+   // char * testGetRef= getRef("HEAD");
+   // char * testGetRefNull= getRef("je n'existe pas!");
+  //  printf( "testGetRef %s\n", testGetRef);
 
-    printf("test GetRefNull %s\n",testGetRefNull);
+   // printf("test GetRefNull %s\n",testGetRefNull);
 
-    free(testGetRef);
+   // free(testGetRef);
 //q5: 
     myGitAdd("tmp");
     myGitAdd("ex6.h");
 //q6: 
 
-    //myGitCommit(char *branch_name, char *message)
+    myGitCommit("master", "tous mes espoirs et reves");
 
+    myGitAdd("ex6.c");
+    myGitAdd("main_test.c");
 
+    myGitCommit("master", "si ca marche je crie");
+    //ca marche ???? ; j'y crois pas ???? 
     return 0;
 }

@@ -91,6 +91,7 @@ char* getRef(char* ref_name){
     if(!fgets(ret, 256, f)){
         free(ret);
         ret= strdup("");
+        //printf("len ret in getref %d" ,strlen(ret));
         fclose(f);
         free(ref_path);
         return ret;
@@ -106,11 +107,14 @@ char* getRef(char* ref_name){
 //q5: 
 
 void myGitAdd(  char * file_or_folder){
+    /*
+    wow.
+    */
     if(! file_or_folder) return;
 
     int testAdd= isFile(".refs/.add");
 
-    printf("test add is %d\n" , testAdd);
+    //printf("test add is %d\n" , testAdd);
     if(testAdd){
 
         //sauvegarde ancienne path du fichier pour pouvoir le supprimer
@@ -134,8 +138,7 @@ void myGitAdd(  char * file_or_folder){
 
         freeWorkTree(wt);
     }
-}//teste ; semble ok????
-//pas sur de quoi faire ngl
+}//teste ; semble ok
 
 //q6: 
 
@@ -148,42 +151,62 @@ void myGitCommit(char *branch_name, char *message){
         return;
     }
     //changer en .refs/branchname 
+
+    unsigned length_name =strlen(branch_name);
+    char * refs_branch_name= calloc((7+length_name), sizeof(char));
+    
+    sprintf(refs_branch_name, ".refs/%s" , branch_name);
+    
     if(!branch_name){ //cas ou branch name n'existe pas
         fprintf(stderr,"la branche n'existe pas et branch_name est NULL\n");
+        free(refs_branch_name);
         return;
     }
-    if(!isFile(branch_name)){ //cas ou branche name n'existe pas
+    if(!isFile(refs_branch_name)){ //cas ou branche name n'existe pas
         fprintf(stderr,"la branche n'existe pas\n");
+        free(refs_branch_name);
         return;
     }
     
-    char * refHead= getRef(".refs/HEAD");
+    char * refHead= getRef("HEAD");
     char * refBranch = getRef(branch_name);
-
-    if(strcmp(refHead, refBranch)){ //cas ou HEAD et branch name ne "pointent" pas sur la meme chose
-        fprintf(stderr ,"head et branchname doivent pointer sur la meme chose\n");
-        free(refBranch);
-        free(refHead);
+    //printf("refHead refBranch %p %p\n", refHead , refBranch);
+   // printf("refHead refBranch %s %s %lu %lu\n", refHead , refBranch, strlen(refHead), strlen(refBranch));
+    if(refBranch && refHead){
+        if(strcmp(refHead, refBranch)){ //cas ou HEAD et branch name ne "pointent" pas sur la meme chose
+            fprintf(stderr ,"head et branchname doivent pointer sur la meme chose\n");
+            free(refBranch);
+            free(refHead);
+            free(refs_branch_name);
+            return;
+        }
+    }else{
+        printf("quelque chose s'est mal passe interruption du commit\n"); 
+        if(refBranch) free(refBranch);
+        if( refHead) free(refHead);
+         free(refs_branch_name);
         return;
     }
     free(refBranch);
     free(refHead);
+    free(refs_branch_name);
     //charger le wt correspondant a .add
-    char * refAdd= getRef(".add");
-    WorkTree * wt= ftwt(refAdd);
+    
+    WorkTree* wt = ftwt(".refs/.add");
+
     //adapter a .add 
 
     char * pathSavedTree= blobWorkTree(wt); //saveWt dans consigne mais etrange
+    //printf("path SavedTree %s\n ", pathSavedTree);
     //enregistrer un instantane de ce wt
 
-    Commit *c =initCommit();
-
-    commitSet(c, "tree", NULL); //question sur ca
+    Commit * c = createCommit(pathSavedTree);
 //mettre hash utiliser create commit
     char * hashPredecessor = getRef(branch_name); 
-
-    if(strcmp(hashPredecessor,"")){ //si le precedent n'est pas "" on ajoute predecessor
-        commitSet(c , "predecessor", hashPredecessor);
+    if(hashPredecessor){
+        if(strcmp(hashPredecessor,"")){ //si le precedent n'est pas "" on ajoute predecessor
+            commitSet(c , "predecessor", hashPredecessor);
+        }
     }
 
     if(message){//si le message n'est pas nul on l'ajoute au commit 
@@ -193,17 +216,17 @@ void myGitCommit(char *branch_name, char *message){
     char * commitPath= blobCommit(c);
     //on met la reference de head et la branche a jour grace a blobCommit
     createUpdateRef(branch_name, commitPath);
-    createUpdateRef(".refs/HEAD", commitPath);
+    createUpdateRef("HEAD", commitPath);
 
 
     //liberation de toute la memoire
     freeCommit(c);
     free(commitPath);
     free(hashPredecessor);
-
+    free(pathSavedTree);
     freeWorkTree(wt);
     remove(".add"); //supprimer .add
-    free(refAdd);
+
 }
 
 //j'ai beaucoup de questions
