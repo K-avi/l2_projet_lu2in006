@@ -4,3 +4,4 @@ prog
 *tmp*
 .vscode
 *.test
+.refs

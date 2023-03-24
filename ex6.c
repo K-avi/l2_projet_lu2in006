@@ -160,17 +160,14 @@ void commitSet(Commit* c, char* key, char* value){
 
 Commit* createCommit(char* hash){
     /*
-    pas sur de ce qu'il faut faire; 
-    je suppose que la clef est "tree" (consigne)
-    et la valeur "hash" ???
+    
     */
 
     Commit* ret= initCommit(); 
     commitSet(ret, "tree", hash);
 
     return ret;
-}//teste; ok ; question sur quoi mettre dans "value" et key !!!!
-
+}//teste; ok ; 
 //q6.7: 
 
 char* commitGet(Commit* c, char* key){

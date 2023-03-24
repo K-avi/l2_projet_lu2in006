@@ -4,6 +4,7 @@
 
 #include "ex4.h"
 #include "ex5.h"
+#include "ex7.h"
 #include "listeChaine.h"
 #include "ex3.h"
 #include "ex1.h"
@@ -228,7 +229,7 @@ freeWorkTree(wt_ex5);
    // freeWorkTree(testq10);
 */
     /* EXERCICE 6 : */
-
+/*
 //q1:
 
     kvp * testkvp= createKeyVal("test", "tetest");
@@ -309,7 +310,37 @@ freeWorkTree(wt_ex5);
     freeKeyVal(testSTKV);
     freeCommit(testInitCommit);
     freeCommit(testCreateCommit);
+*/
 
+//EX7: 
+
+//q1: 
+
+    initRefs();
+
+//q2: 
+    createUpdateRef("HEAD", "abababa");
+    createUpdateRef("bagaba", "abababagababa");
+    createUpdateRef("HEAD", "babababi");
+//q3: 
+    deleteRef("bagaba");
+     deleteRef("bagaba");
+
+//q4: 
+
+    char * testGetRef= getRef("HEAD");
+    char * testGetRefNull= getRef("je n'existe pas!");
+    printf( "testGetRef %s\n", testGetRef);
+
+    printf("test GetRefNull %s\n",testGetRefNull);
+
+    free(testGetRef);
+//q5: 
+    myGitAdd("tmp");
+    myGitAdd("ex6.h");
+//q6: 
+
+    //myGitCommit(char *branch_name, char *message)
 
 
     return 0;

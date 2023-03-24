@@ -12,5 +12,5 @@ extern char * saveWorkTree (WorkTree * wt, char * path); //q2
 extern void restoreWorkTree( WorkTree * wt , char * path); //q3
 
 extern int isDirectory(const char *path) ; //globalement utile
-
+extern int isFile(const char *path); //globalement utile
 #endif
