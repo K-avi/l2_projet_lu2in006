@@ -81,11 +81,16 @@ int main(int argc, char ** argv){
 				printf(".refs n'est pas initialise :/\n");
 				return 8;
 			}
-			if(!isFile("1")){//placeholder ; concatener argv[2] et .refs
+			char * refpath= calloc(7+strlen(argv[2]), sizeof(char));
+			sprintf(refpath, ".refs/%s", argv[2]);
+			if(!isFile(refpath)){//placeholder ; concatener argv[2] et .refs
 				printf("la reference passee en argument n'existe pas\n");
+				free(refpath);
 				return 7;
+
 			}else{
-				remove(""); //placeholder concatener...
+				remove("refpath"); //placeholder concatener...
+				free(refpath);
 				return 0;
 			}
 		}else{
@@ -98,10 +103,26 @@ int main(int argc, char ** argv){
 		create ref :
 		 je ferais + tard
 		*/
+		if(!strcmp(argv[1], "create-refs")){
+			char * refpath= calloc(7+strlen(argv[2]), sizeof(char));
+			sprintf(refpath, ".refs/%s", argv[2]);
+			FILE * f = fopen(refpath, "w");
+
+			fprintf(f, "%s\n", argv[3]);
+
+			fclose(f);
+			free(refpath);
+			return 0;
+
+		}else{
+			printf("erreur argument invalide\n"); 
+			return 14;
+		}
 	}else{ 
 		printf("erreur argument invalide\n");
 			return 15;
 	}
 	return 0;
 
-}
+}//pas teste ; 
+//cas avec nb d'arg variables (commit et add ) non implementes 
