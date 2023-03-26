@@ -19,7 +19,28 @@ int main(int argc, char ** argv){
 	//traiter les cas speciaux (nombre d'arguments variables )
 	//avant de traiter les cas a arguments fixes.
 	
-	if(argc==2){
+	if(!strcmp(argv[1], "commit")){
+
+		if(argc == 3){
+			
+			myGitCommit(argv[2], NULL);
+		}else if(argc==5){//peut etre utiliser getopt???
+			if(strcmp(argv[3], "-m")) {
+				printf("commit : option invalide\n");
+				return 13;
+			}
+			myGitCommit(argv[2], argv[4] );
+		}else{
+			printf("erreur : argument invalide\n");
+			return 12;
+		}
+	}else if (!strcmp(argv[1],"add")){
+		
+
+		for(int i=2; i<argc; i++){
+			myGitAdd(argv[i]);
+		}
+	}else if(argc==2){
 		/*
 		cas possibles: 
 		init
@@ -42,7 +63,13 @@ int main(int argc, char ** argv){
 			}else{
 				struct dirent* entry; 
 				while( (entry=readdir(d))){
-					printf("%s\n", entry->d_name);
+					char * path=  (char*)calloc(strlen(entry->d_name)+7, sizeof(char));
+					sprintf(path, ".refs/%s", entry->d_name);
+
+					if(isFile(path)){
+						printf("%s\n", entry->d_name);
+					}
+					free(path);
 				}
 				closedir(d);
 				return 0;
@@ -83,13 +110,14 @@ int main(int argc, char ** argv){
 			}
 			char * refpath= calloc(7+strlen(argv[2]), sizeof(char));
 			sprintf(refpath, ".refs/%s", argv[2]);
-			if(!isFile(refpath)){//placeholder ; concatener argv[2] et .refs
+			if(!isFile(refpath)){
 				printf("la reference passee en argument n'existe pas\n");
 				free(refpath);
 				return 7;
 
 			}else{
-				remove("refpath"); //placeholder concatener...
+				printf("refpath %s\n", refpath);
+				remove(refpath); 
 				free(refpath);
 				return 0;
 			}
