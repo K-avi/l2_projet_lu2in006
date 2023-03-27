@@ -67,8 +67,7 @@ char* getRef(char* ref_name){
     renvoie NULL si ref name null ou fichier n'existe pas; 
     renvoie "" si le fichier est vide 
 
-    renvoie premiere ligne du fichier sinon en supposant que c'est la que le hash est contenu; 
-    cela posera probleme s'il fallait faire autrement. 
+    renvoie premiere ligne du fichier sinon.
     */
     
     if(! ref_name ) return NULL;

@@ -339,7 +339,7 @@ Commit* ftc(char* file){
 
 char*  sha256file_c( char * c_string){
     /*
-    returns the hash of a string representing a worktree with .t at the end of it.
+    returns the hash of a string representing a commit with .c at the end of it.
     */
 
 	if(!c_string ) return NULL;
@@ -381,7 +381,7 @@ char*  sha256file_c( char * c_string){
 	
 	}
     line[cpt]='.'; 
-    line[++cpt]='t';
+    line[++cpt]='c';
     line[++cpt]='\0';
 	system("rm -f tmp_filename*");
 

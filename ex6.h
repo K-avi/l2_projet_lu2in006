@@ -40,6 +40,8 @@ extern Commit* ftc(char* file); //q6.9
 
 extern char* blobCommit(Commit* c); //q6.10
 
+extern char*  sha256file_c( char * c_string); //utile pour questions plus tard
+
 extern void freeCommit( Commit* c); //pas demande mais necessaire
 
 #endif
