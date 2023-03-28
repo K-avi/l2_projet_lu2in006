@@ -421,7 +421,9 @@ freeWorkTree(wt_ex5);
     freeList(testGetAll);*/
 
 
-//EX 9 : 1 :
+//EX 9  :
+
+//q1:
 /*
     initRefs();
 
@@ -434,5 +436,10 @@ freeWorkTree(wt_ex5);
 /*   NE PAS DECOMMENTER ; DANGEREUX     !!!!
    // restoreCommit("74554e8caf71a1d7c38455808dcd10a9021e28545307aaedbe71491f5a2eb30c.c");
 */
+
+//q2
+
+    myGitCheckoutBranch("master");
+    
     return 0;
 }

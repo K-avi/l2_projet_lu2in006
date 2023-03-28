@@ -30,7 +30,7 @@ void restoreCommit(char* hash_commit){
 
     WorkTree * wt = ftwt ( tree_hash ) ;
     
-    restoreWorkTree ( wt , "." ) ;
+    restoreWorkTree ( wt , "/tmp/tmpdir" ) ;
 
     freeWorkTree(wt);
     free(commit_path);
