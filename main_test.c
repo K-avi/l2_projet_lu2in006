@@ -423,6 +423,15 @@ freeWorkTree(wt_ex5);
 
 //q8 :
 
+    initRefs();
+
+    myGitAdd("ex9.c"); 
+    myGitAdd("ex9.h"); 
+    myGitAdd("main_test.c"); 
+    myGitAdd("tmp");
+
+    myGitCommit("master", "test ex9.1");
+
     restoreCommit("61e6e5eb75385d649ab8876374e2379a4c56cb80727a94340023767363517286.c");
     return 0;
 }

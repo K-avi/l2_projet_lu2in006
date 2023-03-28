@@ -16,7 +16,7 @@ void restoreCommit(char* hash_commit){
     if(!hash_commit) return;
 
     char * commit_path = hashToPathCommit ( hash_commit ) ;
-
+printf("commit path %s\n", commit_path);
     Commit * c = ftc ( commit_path ) ;
 
     char * treePath = commitGet(c, "tree");

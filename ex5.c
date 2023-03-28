@@ -218,7 +218,7 @@ void restoreWorkTree(WorkTree *wt, char *path){
         //strstr permet de chercher '.t' dans la chaine ; on suppose que le hash ne permet pas de creer ce nom
         //et qu'un fichier contenant .t est FORCEMENT un worktree 
 
-        //    printf("in loop, cp file, %s %s\n\n", path_hash, path_target);
+           printf("in loop, cp file, %s %s\n\n", path_hash, path_target);
            cp(path_hash, path_target);
        //   printf("path target in restore mode %d %s %s\n", wt->tab[i].mode , wt->tab[i].name,path_target);
            setMode(wt->tab[i].mode, path_target);
@@ -248,4 +248,4 @@ void restoreWorkTree(WorkTree *wt, char *path){
     }   
 
     return;
-}//fini? pas teste
+}//fini? teste; semble ok
