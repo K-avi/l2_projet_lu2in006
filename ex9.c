@@ -5,6 +5,7 @@
 #include "ex6.h"
 #include "ex7.h"
 #include "ex8.h"
+#include "listeChaine.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -56,17 +57,33 @@ void myGitCheckoutBranch(char* branch){
     restoreCommit(refBranch);
 
     free(refBranch);
-}//ecrit ; pas teste
+}// teste; ok
 
 //q3 : 
 
 List* filterList(List* L, char* pattern){
-    return NULL;
-}
+    if(! (L && pattern)) return NULL; 
+
+    List * ret =initList();
+
+    Cell * curcell= *L;
+    unsigned len = strnlen(pattern , 256);
+
+    while(curcell){
+        if(curcell->data){
+        if(!strncmp(pattern, curcell->data, len)){
+            insererFirst(ret, buildCell(curcell->data));
+        }
+        }
+        curcell=curcell->next;
+    }
+
+    return ret; 
+}//teste ; ok
 
 //q4: 
 
 void myGitCheckoutCommit(char* pattern){
 
-}
+}//pas fait
 

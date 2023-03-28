@@ -439,7 +439,25 @@ freeWorkTree(wt_ex5);
 
 //q2
 
-    myGitCheckoutBranch("master");
-    
+    //myGitCheckoutBranch("master");
+
+//q3: 
+
+    List * ltest= initList();
+
+    insererFirst(ltest, buildCell("titi")); 
+    insererFirst(ltest, buildCell("tito"));
+    insererFirst(ltest, buildCell("toto"));  
+
+    List * filterListTest= filterList(ltest, "ti");
+
+    char * strListTest= ltos(filterListTest);
+
+    printf("test filterList:\n%s\n", strListTest);
+
+    free(strListTest);
+
+    freeList(ltest);
+    freeList(filterListTest);
     return 0;
 }
