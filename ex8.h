@@ -17,4 +17,6 @@ extern  List* branchList(char* branch); //q6
 
 extern List* getAllCommits(); //q7
 
+extern char * hashToPathCommit ( char * hash ); //utile
+
 #endif

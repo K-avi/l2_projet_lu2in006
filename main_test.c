@@ -2,13 +2,20 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "ex4.h"
-#include "ex5.h"
-#include "ex7.h"
+
+
+#include "ex9.h"
 #include "listeChaine.h"
-#include "ex3.h"
 #include "ex1.h"
+
+#include "ex3.h"
+#include "ex4.h"
+
+#include "ex5.h"
 #include "ex6.h"
+
+#include "ex7.h"
+#include "ex8.h"
 
 int main(){
 
@@ -313,7 +320,7 @@ freeWorkTree(wt_ex5);
 */
 
 //EX7: 
-
+/*
 //q1: 
 
     initRefs();
@@ -348,5 +355,74 @@ freeWorkTree(wt_ex5);
 
     myGitCommit("master", "si ca marche je crie");
     //ca marche ???? ; j'y crois pas ???? 
+*/
+
+
+//EX8: 
+/*
+//q1: 
+    initBranch();
+
+//q2:
+    int brancheExistTest1 = branchExists("master");
+    int brancheExistTest2= branchExists("babobibu");
+
+    printf("master exists : %d babobibu exists : %d\n", brancheExistTest1 , brancheExistTest2);
+
+//q3: 
+
+    createBranch("dev");
+
+//q4: 
+
+    char * testGetCurBranch = getCurrentBranch();
+
+    printf("current branch : %s\n" , testGetCurBranch);
+
+    free(testGetCurBranch);*/
+
+//q5: 
+
+    /*initRefs();
+
+    myGitAdd("main_test.c");
+    myGitCommit("master", "test 1 commit");
+
+    printBranch("master");
+
+    myGitAdd("ex8.c");
+    myGitCommit("master", "test apres 2e commit");
+
+    printBranch("master");
+*/
+
+//q6: 
+    /*
+    List * testLBranch = branchList("master"); 
+
+    char * strtestlbranch = ltos(testLBranch);
+
+    printf("test lbranch : %s\n", strtestlbranch);
+
+    free(strtestlbranch); 
+    freeList(testLBranch);
+    */
+    
+//q7: 
+/*
+
+    List * testGetAll = getAllCommits();
+
+    char * GetAllStr= ltos(testGetAll); 
+
+    printf("test getallcommit %s", GetAllStr);
+
+    free(GetAllStr);
+    freeList(testGetAll);*/
+
+
+//q8 :
+
+    restoreCommit("61e6e5eb75385d649ab8876374e2379a4c56cb80727a94340023767363517286.c");
     return 0;
 }

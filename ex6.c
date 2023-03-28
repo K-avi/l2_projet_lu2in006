@@ -189,6 +189,7 @@ char* commitGet(Commit* c, char* key){
                 if (c->T[i]){ //necessaire car si on essaie d'acceder a clef ou val alors que 
                 //c->T[i] est NULL a cet index cela provoque une segfault.
                     if( !strcmp(c->T[i]->key,key)){
+                       
                         return c->T[i]->value;
                     }
                 }
@@ -196,6 +197,7 @@ char* commitGet(Commit* c, char* key){
             }
         }
     }
+ 
     return NULL;
 }//teste ; semble ok
 

@@ -6,3 +6,4 @@ prog
 *.test
 .refs
 myGit
+.current_*
