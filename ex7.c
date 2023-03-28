@@ -194,8 +194,8 @@ void myGitCommit(char *branch_name, char *message){
     WorkTree* wt = ftwt(".refs/.add");
 
     //adapter a .add 
-
-    char * pathSavedTree= blobWorkTree(wt); //saveWt dans consigne mais etrange
+   
+    char * pathSavedTree=  saveWorkTree(wt, "."); //saveWt dans consigne mais etrange
     //printf("path SavedTree %s\n ", pathSavedTree);
     //enregistrer un instantane de ce wt
 

@@ -421,8 +421,8 @@ freeWorkTree(wt_ex5);
     freeList(testGetAll);*/
 
 
-//q8 :
-
+//EX 9 : 1 :
+/*
     initRefs();
 
     myGitAdd("ex9.c"); 
@@ -430,8 +430,9 @@ freeWorkTree(wt_ex5);
     myGitAdd("main_test.c"); 
     myGitAdd("tmp");
 
-    myGitCommit("master", "test ex9.1");
-
-    restoreCommit("61e6e5eb75385d649ab8876374e2379a4c56cb80727a94340023767363517286.c");
+    myGitCommit("master", "test ex9.1");*/
+/*   NE PAS DECOMMENTER ; DANGEREUX     !!!!
+   // restoreCommit("74554e8caf71a1d7c38455808dcd10a9021e28545307aaedbe71491f5a2eb30c.c");
+*/
     return 0;
 }
