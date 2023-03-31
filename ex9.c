@@ -83,20 +83,50 @@ List* filterList(List* L, char* pattern){
 
 //q4: 
 
+
+unsigned list_size (List  L ){
+    /*
+    */
+    if(!L) return 0;
+
+    List tmp = L;
+    unsigned ret= 0;
+    while(tmp){
+
+        if(tmp->data)  ret++;
+
+        tmp=tmp->next;
+    }
+
+    return ret; 
+}//pas teste 
+
 void myGitCheckoutCommit(char* pattern){
-    if(!pattern) return;
+    if(!pattern) {
+        printf("pointeur NULL passe a myGitCheckoutCommit()\n");
+        return;
+    }
 
     List * L = getAllCommits();
+    
+        printf("L is %p \n%s\n", L, (*L)->data);
     List * filtered_list = filterList (L , pattern ) ;
     freeList(L);
 
+
     List tmpList= *filtered_list;
-    if(!tmpList){ //cas sans element
+
+    unsigned taille = list_size(tmpList);
+
+
+    if( !taille ){ //cas sans element
         printf ( "Aucun pattern ne correspond au pattern passe. \n" ) ;
         
     }
-    else if ( !(tmpList->next)) { //cas avec 1 element
-        
+    else if ( taille==1) { //cas avec 1 element
+
+        printf("tmp data is : %s\n", tmpList->data);
+        printf("un seul match trouvé : restauration du directory\n");
         char * commit_hash = ( listGet ( filtered_list , 0) ) -> data ;
         createUpdateRef ( "HEAD" , commit_hash ) ;
         restoreCommit ( commit_hash ) ;

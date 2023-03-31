@@ -336,6 +336,9 @@ List* getAllCommits(){
         if(!element->data){
             element=element->next; 
         
+        }else if(!strcmp(".add", element->data)){
+
+            element=element->next;
         }else{
             List * dataList= branchList(element->data);
             Cell * curcell= *dataList;

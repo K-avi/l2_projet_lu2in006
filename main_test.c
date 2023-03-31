@@ -422,9 +422,9 @@ freeWorkTree(wt_ex5);
 
 
 //EX 9  :
-
-//q1:
 /*
+//q1:
+
     initRefs();
 
     myGitAdd("ex9.c"); 
@@ -432,10 +432,10 @@ freeWorkTree(wt_ex5);
     myGitAdd("main_test.c"); 
     myGitAdd("tmp");
 
-    myGitCommit("master", "test ex9.1");*/
-/*   NE PAS DECOMMENTER ; DANGEREUX     !!!!
-   // restoreCommit("74554e8caf71a1d7c38455808dcd10a9021e28545307aaedbe71491f5a2eb30c.c");
-*/
+    myGitCommit("master", "test ex9.1");
+//  NE PAS DECOMMENTER ; DANGEREUX     !!!
+    restoreCommit("74554e8caf71a1d7c38455808dcd10a9021e28545307aaedbe71491f5a2eb30c.c");
+
 
 //q2
 
@@ -458,10 +458,19 @@ freeWorkTree(wt_ex5);
     free(strListTest);
 
     freeList(ltest);
-    freeList(filterListTest);
+    freeList(filterListTest);*/
 
 //q4:
 
-    myGitCheckoutCommit("a");
+    List * testGetAll = getAllCommits();
+
+    char * GetAllStr= ltos(testGetAll); 
+
+    printf("\ntest getallcommit %s\n", GetAllStr);
+
+    free(GetAllStr);
+    freeList(testGetAll);
+
+    myGitCheckoutCommit("22");
     return 0;
 }
