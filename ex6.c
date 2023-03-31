@@ -366,7 +366,6 @@ char*  sha256file_c( char * c_string){
 	
 	fclose(f);
 
-	unsigned short len= strnlen(line, 260);
 	unsigned short cpt=0; 
 
 	while(line[cpt]!=' ' && line[cpt] !='\0') ++cpt;
@@ -398,9 +397,6 @@ char* blobCommit(Commit* c){
 
     char * hash= sha256file_c("c.tmp");
     char * path = hashToPath(hash);
-
-
-    unsigned short path_length= strlen( path);
 
     char * directory_name = strndup(path, 2);
 

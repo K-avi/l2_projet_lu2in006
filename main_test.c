@@ -459,5 +459,9 @@ freeWorkTree(wt_ex5);
 
     freeList(ltest);
     freeList(filterListTest);
+
+//q4:
+
+    myGitCheckoutCommit("a");
     return 0;
 }

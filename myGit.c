@@ -5,6 +5,8 @@
 
 
 #include "ex5.h"
+#include "ex8.h"
+#include "ex9.h"
 #include "listeChaine.h"
 #include "ex1.h"
 #include "ex7.h"
@@ -52,6 +54,7 @@ int main(int argc, char ** argv){
 		if(!strcmp(argv[1], "init")){
 			//initialise .refs
 			initRefs();
+			initBranch(); //ex10.1
 			return 0;
 		}else if(!strcmp(argv[1], "list-refs")){
 			//liste fichiers de .refs
@@ -93,6 +96,18 @@ int main(int argc, char ** argv){
 			FILE * f = fopen(".refs/.add", "w");
 			fclose(f);
 			return 0;
+		}else if (!strcmp(argv[1], "get-current-branch")){//ex10.2
+
+			char * curbranch = getCurrentBranch();
+			if(curbranch){//getCurrentBranch() se passe bien 
+				printf("la branche courante est : %s\n", curbranch);
+				free(curbranch);
+
+				return 0;
+			}else{
+				fprintf(stderr, "erreur recuperation du nom de la branche courante\n");
+				exit(-11);
+			}
 		}else{
 			printf("erreur : argument invalide\n");
 			return 0;
@@ -121,6 +136,21 @@ int main(int argc, char ** argv){
 				free(refpath);
 				return 0;
 			}
+		}else if(!strcmp(argv[1], "branch")){ //ex10.2:
+				createBranch(argv[2]);
+				return 0;
+		}else if(!strcmp(argv[1], "branch-print")){
+
+				printBranch(argv[2]);
+				return 0;
+		}else if(!strcmp(argv[1], "checkout-branch")){
+
+				myGitCheckoutBranch(argv[2]);
+				return 0;
+		}else if(!strcmp(argv[1], "checkout-commit")){
+
+				myGitCheckoutCommit(argv[2]);
+				return 0;
 		}else{
 			printf("erreur argument invalide\n");
 			return 6;
@@ -129,7 +159,6 @@ int main(int argc, char ** argv){
 		/*
 		cas possible : 
 		create ref :
-		 je ferais + tard
 		*/
 		if(!strcmp(argv[1], "create-refs")){
 			char * refpath= calloc(7+strlen(argv[2]), sizeof(char));

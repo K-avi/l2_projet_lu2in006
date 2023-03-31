@@ -162,7 +162,10 @@ void printBranch(char* branch){
 
     char * commitHash = getRef(branch);
     
-    if(!commitHash) return;
+    if(!commitHash){
+         fprintf(stderr, "la branche %s n'existe pas\n", branch);
+         return;
+    }
    
     if(strlen(commitHash)==0){
         free(commitHash);

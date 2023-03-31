@@ -84,6 +84,36 @@ List* filterList(List* L, char* pattern){
 //q4: 
 
 void myGitCheckoutCommit(char* pattern){
+    if(!pattern) return;
 
-}//pas fait
+    List * L = getAllCommits();
+    List * filtered_list = filterList (L , pattern ) ;
+    freeList(L);
+
+    List tmpList= *filtered_list;
+    if(!tmpList){ //cas sans element
+        printf ( "Aucun pattern ne correspond au pattern passe. \n" ) ;
+        
+    }
+    else if ( !(tmpList->next)) { //cas avec 1 element
+        
+        char * commit_hash = ( listGet ( filtered_list , 0) ) -> data ;
+        createUpdateRef ( "HEAD" , commit_hash ) ;
+        restoreCommit ( commit_hash ) ;
+       
+    } else { //cas avec plusieurs elements
+      
+        printf ( "Plusieurs patterns correspondent :\n" ) ;    
+        Cell * tmp = *filtered_list; 
+
+        while(tmp){
+            if(tmp->data) printf("-> %s\n", tmp->data);
+            tmp=tmp->next;
+        }
+        
+    }
+
+    freeList(filtered_list);
+   
+}//pas teste 
 
