@@ -137,6 +137,8 @@ int main(int argc, char ** argv){
 				return 0;
 			}
 		}else if(!strcmp(argv[1], "branch")){ //ex10.2:
+
+// VERIFIER EXISTENCE DE BRANCHE AVANT DE CREER 
 				createBranch(argv[2]);
 				return 0;
 		}else if(!strcmp(argv[1], "branch-print")){

@@ -208,12 +208,16 @@ void restoreWorkTree(WorkTree *wt, char *path){
         //if(!wt->tab[i].hash) { i++ ;continue;}
         
         path_hash =hashToPath(wt->tab[i].hash);
-       // if(!path_hash) {  i++ ;continue;}
+        if(!path_hash){
+            i++;
+            continue;
+        }
+     
 
         //vide et remplis path target ; on suppose que 512 char suffisent
         memset(path_target,0, 512);
         snprintf(path_target, 512, "%s/%s", path, wt->tab[i].name);
-  
+    
         if(!strstr(path_hash, ".t") ){ 
         //strstr permet de chercher '.t' dans la chaine ; on suppose que le hash ne permet pas de creer ce nom
         //et qu'un fichier contenant .t est FORCEMENT un worktree 

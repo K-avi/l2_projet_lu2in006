@@ -436,13 +436,13 @@ freeWorkTree(wt_ex5);
 //  NE PAS DECOMMENTER ; DANGEREUX     !!!
     restoreCommit("74554e8caf71a1d7c38455808dcd10a9021e28545307aaedbe71491f5a2eb30c.c");
 
-
+*/
 //q2
 
-    //myGitCheckoutBranch("master");
+  //  myGitCheckoutBranch("master");
 
 //q3: 
-
+/*
     List * ltest= initList();
 
     insererFirst(ltest, buildCell("titi")); 
@@ -458,8 +458,8 @@ freeWorkTree(wt_ex5);
     free(strListTest);
 
     freeList(ltest);
-    freeList(filterListTest);*/
-
+    freeList(filterListTest);
+*/
 //q4:
 
     List * testGetAll = getAllCommits();
@@ -471,6 +471,6 @@ freeWorkTree(wt_ex5);
     free(GetAllStr);
     freeList(testGetAll);
 
-    myGitCheckoutCommit("22");
+    myGitCheckoutCommit("93");
     return 0;
 }

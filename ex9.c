@@ -109,7 +109,6 @@ void myGitCheckoutCommit(char* pattern){
 
     List * L = getAllCommits();
     
-        printf("L is %p \n%s\n", L, (*L)->data);
     List * filtered_list = filterList (L , pattern ) ;
     freeList(L);
 
