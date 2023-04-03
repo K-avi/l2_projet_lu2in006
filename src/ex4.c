@@ -96,7 +96,10 @@ WorkTree* initWorkTree(){
 //EX4.5:
 
 int inWorkTree(WorkTree* wt, char* name){
-
+    /*
+    renvoie index de l'element de nom name s'il 
+    est dans WT ; -1 sinon
+    */
 
     if(! (wt && name))  return -1;
     if(!wt->tab) return -1;
