@@ -138,8 +138,14 @@ int main(int argc, char ** argv){
 			}
 		}else if(!strcmp(argv[1], "branch")){ //ex10.2:
 
-// VERIFIER EXISTENCE DE BRANCHE AVANT DE CREER 
-				createBranch(argv[2]);
+
+				char * path =(char*) calloc(strnlen(argv[2]+7 , 256), sizeof(char));
+				snprintf(path , strnlen(argv[2]+7, 256), ".refs/%s", argv[2]);
+
+				if(!isFile(path)){
+					createBranch(argv[2]);
+				}
+				free(path);
 				return 0;
 		}else if(!strcmp(argv[1], "branch-print")){
 
@@ -183,5 +189,4 @@ int main(int argc, char ** argv){
 	}
 	return 0;
 
-}//pas teste ; 
-//cas avec nb d'arg variables (commit et add ) non implementes 
+}//teste ; semble ok

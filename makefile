@@ -1,26 +1,22 @@
-CFLAGS = -g -Wall -Wextra -pedantic -Wno-unused-parameter 
+TARGET:= myGit
+TEST :=test
 
-CC = gcc
-ALLPROGS= test myGit
+ALLPROGS= $(TARGET) $(TEST)
 
+.PHONY:	all clean
 
+all: $(ALLPROGS)
+progs: $(PROGRAMS)
 
-SRC:=ex1.o listeChaine.o ex3.o ex4.o ex5.o ex6.o ex7.o ex8.o ex9.o
+$(TEST): 
+	$(MAKE) -C src/ ../test
 
-all: $(ALLPROGS) 
-
-test: $(SRC) main_test.o
-	$(CC) -o $@ $(CFLAGS) $^
-
-myGit: $(SRC) myGit.o
-	$(CC) -o $@ $(CFLAGS) $^
-
-
-%.o:%.c %.h
-	$(CC)  $(GCC_FLAGS) -c  $<
+$(TARGET): 
+	$(MAKE) -C src/ ../myGit
 
 
 clean:
-	rm -f *.o *~ $(ALLPROGS)
+	$(MAKE) -C src/ clean
+	rm -f $(ALLPROGS)
 
-.PHONY:	clean
+.PHONY: clean
