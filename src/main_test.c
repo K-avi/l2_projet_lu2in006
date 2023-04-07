@@ -424,8 +424,8 @@ freeWorkTree(wt_ex5);
     freeList(testGetAll);*/
 
 
-//EX 9  :
-
+//EX   :
+/*
 //q1:
 
     initRefs();
@@ -477,7 +477,7 @@ freeWorkTree(wt_ex5);
     myGitCheckoutCommit("93");
 //ex11: 
 
-//q1: 
+//q1: */
 
 
 //q2: 

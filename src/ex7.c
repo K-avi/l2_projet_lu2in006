@@ -79,8 +79,9 @@ char* getRef(char* ref_name){
     sprintf(ref_path, ".refs/%s", ref_name);
 
     FILE* f = fopen(ref_path, "r");
+   
+    if(f==NULL){ 
 
-    if(!f){ 
         free(ref_path);
         return NULL;
         
