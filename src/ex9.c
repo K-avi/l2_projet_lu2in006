@@ -32,6 +32,7 @@ void restoreCommit(char* hash_commit){
     WorkTree * wt = ftwt ( tree_hash ) ;
     
     restoreWorkTree ( wt , "/tmp/tmpdir" ) ;
+    //dans directory pas dangereux pour eviter de tuer le repertoire courant dans les tests
 
     freeWorkTree(wt);
     free(commit_path);

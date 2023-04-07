@@ -4,7 +4,6 @@
 
 
 
-#include "ex9.h"
 #include "listeChaine.h"
 #include "ex1.h"
 
@@ -16,6 +15,10 @@
 
 #include "ex7.h"
 #include "ex8.h"
+
+
+#include "ex9.h"
+#include "ex11.h"
 
 int main(){
 
@@ -199,7 +202,7 @@ int main(){
 
 //q2: 
 
-  // char * test_5_2 = saveWorkTree(wt, "/home/ivan/Documents/L2/doc_s2/struct_donnees/projet");
+   char * test_5_2 = saveWorkTree(wt, "/home/ivan/Documents/L2/doc_s2/struct_donnees/projet");
 
 //q3: 
 
@@ -207,7 +210,7 @@ int main(){
 
 
    appendWorkTree(wt_ex5, "testDir", NULL, 777);
-   // appendWorkTree(wt_ex5, "ex5.c", NULL, 777);
+   appendWorkTree(wt_ex5, "ex5.c", NULL, 777);
    char * path =saveWorkTree(wt_ex5, "/tmp/projetSD");
     free(path);
      
@@ -422,7 +425,7 @@ freeWorkTree(wt_ex5);
 
 
 //EX 9  :
-/*
+
 //q1:
 
     initRefs();
@@ -434,15 +437,15 @@ freeWorkTree(wt_ex5);
 
     myGitCommit("master", "test ex9.1");
 //  NE PAS DECOMMENTER ; DANGEREUX     !!!
-    restoreCommit("74554e8caf71a1d7c38455808dcd10a9021e28545307aaedbe71491f5a2eb30c.c");
+   // restoreCommit("74554e8caf71a1d7c38455808dcd10a9021e28545307aaedbe71491f5a2eb30c.c");
 
-*/
+
 //q2
 
   //  myGitCheckoutBranch("master");
 
 //q3: 
-/*
+
     List * ltest= initList();
 
     insererFirst(ltest, buildCell("titi")); 
@@ -459,7 +462,7 @@ freeWorkTree(wt_ex5);
 
     freeList(ltest);
     freeList(filterListTest);
-*/
+
 //q4:
 
     List * testGetAll = getAllCommits();
@@ -472,5 +475,13 @@ freeWorkTree(wt_ex5);
     freeList(testGetAll);
 
     myGitCheckoutCommit("93");
+//ex11: 
+
+//q1: 
+
+
+//q2: 
+    merge("test-creation", "ca ne va pas marcher je pense.");
+
     return 0;
 }

@@ -195,7 +195,7 @@ void myGitCommit(char *branch_name, char *message){
 
     //adapter a .add 
    
-    char * pathSavedTree=  saveWorkTree(wt, "."); //saveWt dans consigne mais etrange
+    char * pathSavedTree=  saveWorkTree(wt, ".");
     //printf("path SavedTree %s\n ", pathSavedTree);
     //enregistrer un instantane de ce wt
 
