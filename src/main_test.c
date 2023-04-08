@@ -4,6 +4,7 @@
 
 
 
+#include "ex9.h"
 #include "listeChaine.h"
 #include "ex1.h"
 
@@ -16,8 +17,6 @@
 #include "ex7.h"
 #include "ex8.h"
 
-
-#include "ex9.h"
 #include "ex11.h"
 
 int main(){
@@ -195,17 +194,17 @@ int main(){
 
 */
 /* EX5 :*/
-/*
+
 //q1:
 
     //blobWorkTree(testq10);
 
 //q2: 
 
-   char * test_5_2 = saveWorkTree(wt, "/home/ivan/Documents/L2/doc_s2/struct_donnees/projet");
+  // char * test_5_2 = saveWorkTree(wt, "/home/ivan/Documents/L2/doc_s2/struct_donnees/projet");
 
 //q3: 
-
+/*
    WorkTree * wt_ex5 =initWorkTree();
 
 
@@ -233,11 +232,11 @@ freeWorkTree(wt_ex5);
     freeWorkTree(test_stwt);
     free(test_wtts1);
    
-
+*/
    // free(test_5_2);
    // free(str_test_q10);
    // freeWorkTree(testq10);
-*/
+
     /* EXERCICE 6 : */
 /*
 //q1:
@@ -424,7 +423,7 @@ freeWorkTree(wt_ex5);
     freeList(testGetAll);*/
 
 
-//EX   :
+//EX 9  :
 /*
 //q1:
 
@@ -437,15 +436,15 @@ freeWorkTree(wt_ex5);
 
     myGitCommit("master", "test ex9.1");
 //  NE PAS DECOMMENTER ; DANGEREUX     !!!
-   // restoreCommit("74554e8caf71a1d7c38455808dcd10a9021e28545307aaedbe71491f5a2eb30c.c");
+    restoreCommit("74554e8caf71a1d7c38455808dcd10a9021e28545307aaedbe71491f5a2eb30c.c");
 
-
+*/
 //q2
 
   //  myGitCheckoutBranch("master");
 
 //q3: 
-
+/*
     List * ltest= initList();
 
     insererFirst(ltest, buildCell("titi")); 
@@ -462,26 +461,29 @@ freeWorkTree(wt_ex5);
 
     freeList(ltest);
     freeList(filterListTest);
-
+*/
 //q4:
 
-    List * testGetAll = getAllCommits();
+//ex11 :
 
-    char * GetAllStr= ltos(testGetAll); 
+//q1: 
 
-    printf("\ntest getallcommit %s\n", GetAllStr);
+//q2:
+   /* initRefs();
 
-    free(GetAllStr);
-    freeList(testGetAll);
+    myGitAdd("makefile"); 
+    myGitAdd("src/ex9.h"); 
+    myGitCommit("master", "master ex11.2");
 
-    myGitCheckoutCommit("93");
-//ex11: 
+    createBranch("test");
 
-//q1: */
+    myGitAdd("src/ex7.c");
+    myGitAdd("src/ex7.h");
 
-
-//q2: 
-    merge("test-creation", "ca ne va pas marcher je pense.");
+    myGitCommit("test", "test :ex11.2");
+*/
+    List * l = merge("test", "plz work");
+    if(l) freeList(l);
 
     return 0;
 }

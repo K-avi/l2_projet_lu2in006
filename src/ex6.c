@@ -26,11 +26,15 @@ kvp* createKeyVal(char* key, char* val){
 
 void freeKeyVal( kvp* k){
     if(!k) return;
+  //  printf("%s %s \n", k->key , k->value);
 
     if(k->key) free(k->key); 
+    k->key=NULL;
     if(k->value) free(k->value);
+    k->value=NULL;
 
     free(k);
+    k=NULL;
 }//teste ; ok
 
 //q6.2: 
@@ -430,7 +434,10 @@ void freeCommit( Commit* c){
     if(!c) return;
 
     for(unsigned i=0; i<c->size ;i++){
-        freeKeyVal(c->T[i]);
+        if(c->T[i]){
+            freeKeyVal(c->T[i]);
+        }
+        c->T[i]=NULL;
     }
     free(c->T);
     free(c);

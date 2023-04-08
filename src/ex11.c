@@ -91,7 +91,7 @@ WorkTree* mergeWorkTrees(WorkTree* wt1, WorkTree* wt2, List** conflicts){
     free(skippedWT2);
     return ret;
 
-}//pas teste 
+}//teste ; semble ok?
 
 
 //q2: 
@@ -120,12 +120,14 @@ List* merge(char* remote_branch, char* message){
     }
    fclose(f);
    for(unsigned i=0 ; i<256; i++){ //debile mais pour eviter pb d'espaces
-        if(curbranch[i]==' '){
+        if(curbranch[i]<=20){
             curbranch[i]='\0';
         }
    }
     char * branch_ref= getRef(curbranch); //recupere le hash du commit
 //verifications autour de branch_ref: 
+
+   
     if(!branch_ref){//cas ou le fichier decrit dans .current_branch n'existe pas dans .refs/
 
         fprintf(stderr, "erreur lors de la lecture des informations liees a la branche courante\n");
@@ -135,46 +137,50 @@ List* merge(char* remote_branch, char* message){
     cas ou le fichier dans .refs/ est vide; peut etre mieux de "fusionner" avec remote et renvoyer ok  
     */
         fprintf(stderr, "il n'y a pas eu de commit sur la branche courante: le commit est vide\n");
-   //     free(branch_ref);
+        free(branch_ref);
         return NULL;
     }
 
-    printf("reached check 1\n");
+
     char * commit_path = hashToPathCommit(branch_ref); //la path complete du commit courant
- //   free(branch_ref);
+    free(branch_ref);
 
     if(!commit_path){
         /*
         cas ou le fichier de commit n'existe pas / plus ou n'a pas pu etre ouvert 
         */
-
+        
         fprintf(stderr,"erreur : impossible d'acceder au dernier commit\nannulation du merge.\n"); 
         return NULL;
     }
 
     Commit * cur_commit = ftc(commit_path); //on charge le commit courant 
-   // free(commit_path);
+    free(commit_path);
 
     char * tree_ref= commitGet(cur_commit, "tree"); //on recupere la reference du worktree
-   // freeCommit(cur_commit);
+    
 
     if(!tree_ref){
         /*
         cas ou la reference de tree n'est pas dans le commit
         */
-       
+        freeCommit(cur_commit);
+   
         fprintf(stderr,"pas d'arbre dans le commit courant\nannulation du merge.\n");
         return NULL;
     }
 
     char * tree_path =hashToPath(tree_ref); //on suppose que la conversion en path se passe bien
- //   free(tree_ref);
+   
 
     WorkTree * CurWt= ftwt(tree_path); //worktree du commit courant (enfin, c'etait si penible )
-   // free(tree_path);
+    free(tree_path);
 
     if(!CurWt){  
         //echec lors de l'ouverture du fichier de CurWt ou alors inexistence de celui-ci
+        freeCommit(cur_commit);
+      
+
         fprintf(stderr, "echec lors de la recuperation de l'arbre t lie a la branche courante\nVerifiez que les commit/worktree sont presents\n");
         return NULL;
     }
@@ -182,67 +188,87 @@ List* merge(char* remote_branch, char* message){
     char * remote_ref= getRef(remote_branch); 
     if(!remote_ref){
         /*cas ou echec de lecture remote_branch / pb d'allocation etc*/
-      //  freeWorkTree(CurWt);
+        freeWorkTree(CurWt);
+        freeCommit(cur_commit);
+    
+
         fprintf(stderr, "echec lors de la lecture de la reference distante\nVerifiez que la reference existe\n");
         return NULL;
     }
 
     char * remote_path_commit = hashToPathCommit(remote_ref);
-   // free(remote_ref);
+    free(remote_ref);
 
     Commit* remote_commit = ftc( remote_path_commit);
- //   free(remote_path_commit);
+    free(remote_path_commit);
 
     if(! remote_commit){
         /*cas ou echec de lecture remote_branch / pb d'allocation etc*/
-     //   freeWorkTree(CurWt);
+        freeWorkTree(CurWt);
+        freeCommit(cur_commit);
+        freeCommit(remote_commit);
+
         fprintf(stderr, "echec lors de la recuperation commit lie a la branche distante\nVerifiez que les commit/worktree sont presents\n");
         return NULL;
     }
 
     char * remote_wt_ref= commitGet(remote_commit, "tree");
-   // freeCommit(remote_commit);
+    
 
     if(!remote_wt_ref){
         /*cas ou echec de lecture remote_branch / pb d'allocation etc*/
-     //   freeWorkTree(CurWt);
+       freeWorkTree(CurWt);
+       freeCommit(cur_commit);
+       freeCommit(remote_commit);
+
+        
         fprintf(stderr, "echec lors de la recuperation du hash lie a la cle tree dans le commit distant\n");
+        return NULL;
     }
 
     char * remote_wt_path = hashToPath(remote_wt_ref);//on suppose que ca ce passe bien etc etc
- //   free(remote_wt_ref);
+
 
     WorkTree * remote_wt = ftwt(remote_wt_path);
-  //  free(remote_wt_path);
+    free(remote_wt_path);
 
     if(!remote_wt){
         /*je devienne fou*/
         
-    //    freeCommit(remote_commit);
-     //   freeWorkTree(CurWt);
+        freeCommit(remote_commit);
+        freeWorkTree(CurWt);
+        freeCommit(cur_commit);
+        freeCommit(remote_commit);
+
         fprintf(stderr, "echec lors de la recuperation du fichier stockant l'arbre du commit distant\n");
+        return NULL;
     }
 
     List *ret=initList(); 
 
     WorkTree * mergedWT =  mergeWorkTrees(CurWt, remote_wt, &ret);
-   // freeWorkTree(CurWt);
-   // freeWorkTree(mergedWT);
+    freeWorkTree(CurWt);
+    freeWorkTree(remote_wt);
 
 
     if( (*ret)->next ){//un membre a ete ajoute : il y a au moins un conflit
         
         fprintf(stderr, "au moins un conflit a ete detecte: annulation du merge\n");
 
-       // freeWorkTree(mergedWT); 
-       // freeList(ret);
+        freeWorkTree(mergedWT); 
         
-        return NULL;
+        freeCommit(cur_commit);
+        freeCommit(remote_commit);
+        
+        return ret;
     }else{//aucun conflits : ok de creer un commit et de merge
         
-        char * ref_rm_path= getRef(remote_branch); //supprimer reference distante
+        char * ref_rm_path= (char*)calloc(strnlen(remote_branch, 256)+7, sizeof(char)); //supprimer reference distante
+        sprintf(ref_rm_path, ".refs/%s" ,remote_branch);
+
+        printf("ref rm path is %s\n", ref_rm_path);
         remove(ref_rm_path);
-      //  free(ref_rm_path);
+        free(ref_rm_path);
         
         remote_ref= getRef(remote_branch);
         char * curbranch_ref= getRef( curbranch);
@@ -250,12 +276,12 @@ List* merge(char* remote_branch, char* message){
         char * path_saved_tree = saveWorkTree(mergedWT, ".");
 
         Commit * c= createCommit(path_saved_tree);
-     //   free(path_saved_tree);
+        free(path_saved_tree);
         
         commitSet(c, "predecessor", curbranch_ref);
         commitSet(c, "merged_predecessor", remote_ref);
-      //  free(curbranch_ref); 
-       // free(remote_ref);
+        free(curbranch_ref); 
+        free(remote_ref);
 
         
 
@@ -269,10 +295,19 @@ List* merge(char* remote_branch, char* message){
         createUpdateRef(curbranch, new_commitPath);
         createUpdateRef("HEAD", new_commitPath);
         
-      //  free(new_commitPath); 
-      //  freeCommit(c);
+        free(new_commitPath); 
+
+        freeCommit(cur_commit);
+        freeCommit(remote_commit);
+
+        freeCommit(c);
 
         myGitCheckoutBranch(curbranch);
+
+        freeList(ret);
+        freeWorkTree(mergedWT);
+        
+        return  NULL;
     }
 
     return NULL; //cas jamais atteint; placeholder pour eviter warning "non void function doesnt return etc"   

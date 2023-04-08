@@ -46,15 +46,19 @@ void myGitCheckoutBranch(char* branch){
     if(!branch) return;
 
     FILE * f = fopen(".current_branch", "w");
+    //printf("dans checkout branch est %s\n", branch);
     fprintf(f, "%s" ,branch);
     fclose(f);
 
     char * refBranch = getRef(branch);
-
+    if(!refBranch){
+        fprintf(stderr,"erreur dans checkout : la reference demandee n'existe pas.\nla reference est %s\n",branch);
+        return;
+    }
     f=fopen(".refs/HEAD", "w");
     fprintf(f, "%s", refBranch);
     fclose(f);
-
+    
     restoreCommit(refBranch);
 
     free(refBranch);
