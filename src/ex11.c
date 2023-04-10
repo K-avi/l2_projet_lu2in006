@@ -311,10 +311,89 @@ List* merge(char* remote_branch, char* message){
     }
 
     return NULL; //cas jamais atteint; placeholder pour eviter warning "non void function doesnt return etc"   
-}
+}//teste ; semble ok
 
 //q3: 
 void createDeletionCommit(char* branch, List* conflicts, char* message){
 
-}
+    /*
+    renvoie null is branch est null; 
+    accepte pointeur null pour List (cas ou rien n'est dedans?)
+    */
+    if(!branch ) return;
+
+    char currentBranch[256]; 
+    memset(currentBranch, 0, 256); 
+
+    FILE * f = fopen(".current_branch","r");
+    if(!f) return;
+    if(!fgets(currentBranch, 256, f)){
+        fclose(f);
+         return;
+    }
+    
+    for(unsigned i=0; i<256; i++){//enleve les caracteres comme ' ' '\n' ,...
+		if(currentBranch[i]<=20) currentBranch[i]='\0';
+	}
+    fclose(f);
+
+    if(!(branch && conflicts)){
+        return;
+    }
+
+    myGitCheckoutBranch(branch);//se deplace dans la branche courante
+
+    char * branchRef= getRef(branch); //recupere son dernier commit
+    if(!branchRef){
+        return;
+    }
+
+    char * commitPath = hashToPathCommit(branchRef);
+    free(branchRef);
+
+    Commit * c = ftc(commitPath);
+    free(commitPath); 
+
+    if(!c){
+        return;
+    }
+
+    //recupere le wt associe 
+    char * wtRef= commitGet( c, "tree"); //pas besoin de liberer car commitGet ne fait pas d'allocation et passe la reference
+    char * wtPath =  hashToPath(wtRef);
+    if(!wtPath){
+        freeCommit(c); 
+        return;
+    }
+
+    WorkTree * wt= ftwt(wtPath);
+    free(wtPath);
+    freeCommit(c);
+
+    if(!wt){
+        return;
+    }
+
+    //vide la zone de preparation 
+
+    f = fopen(".refs/.add", "w");
+    fclose(f);
+    //ajoute elements ne faisant pas partie de la liste
+    for(unsigned i=0 ; i <(unsigned) wt->n; i++){
+
+        if(conflicts){//permet de ne pas appeler searchList si elle est NULL
+            if(!searchList(conflicts, wt->tab[i].name)){ //ajoute si le fichier n'est pas present dans la liste
+                myGitAdd(wt->tab[i].name);
+            }
+        }else{
+            myGitAdd(wt->tab[i].name);
+
+        }
+    }
+    freeWorkTree(wt);
+
+    myGitCommit(branch, message);//effectue le commit 
+
+    myGitCheckoutBranch(currentBranch);//revient sur la branche de depart
+}//pas teste 
 //a l'aide jpp de ce truc c'est infame 

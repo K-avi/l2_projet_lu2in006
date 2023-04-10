@@ -126,7 +126,10 @@ Cell* listGet ( const List *L , int i){
 //q2.6:
 
 Cell * searchList(const List* L, char * str){
-
+    /*
+    renvoie la cellule de la liste contenant str dans sa case de donnee 
+    si elle existe et NULL sinon.
+    */
     List tmp= *L; 
 
     while( tmp){

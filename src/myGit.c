@@ -2,8 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <dirent.h>
+#include <sys/types.h>
 
 
+#include "ex11.h"
 #include "ex5.h"
 #include "ex8.h"
 #include "ex9.h"
@@ -42,6 +44,81 @@ int main(int argc, char ** argv){
 		for(int i=2; i<argc; i++){
 			myGitAdd(argv[i]);
 		}
+	}else if(!strcmp(argv[1], "merge")){//q11.4 ; pas teste
+		char* message=NULL;
+		if(argc==4){	
+			message=argv[2];
+		}
+
+		FILE *f= fopen(".current_branch", "r");//recupere current branch
+		char  curBranch[256];
+		memset(curBranch, 0, 256);
+
+		fgets(curBranch, 256, f);
+		fclose(f);
+
+		List * conflits= merge(curBranch, argv[2] );
+		
+		if(!conflits){//cas ou pas de conflits
+			printf("aucun conflits : merge effectue\n");
+			return 0;
+		}else{
+			
+			printf("selectionnez l'option de merge:\n1- \n2-\n3-");
+			unsigned char opt=getchar();
+			List lconflits= *conflits;
+			switch (opt) {
+
+			case '1': 
+						createDeletionCommit(argv[2], conflits, message);
+						List * l= merge(argv[2], message); 
+						if(l) freeList(l); //cas non attaignable normalement
+						break;
+			case '2': 
+						createDeletionCommit(curBranch, conflits, message); 
+						List * l1 = merge(argv[2], message); 
+						if(l1) freeList(l1); //cas non attaignable normalement
+						break;
+			case '3': 	
+						opt=0;
+						List * lCurbranch = initList(); 
+						List * lRemote = initList();
+
+						while(lconflits){
+
+							printf("choisissez la branche ou conserver le fichier :\n1-branche : %s\n2-branche : %s\n", curBranch, argv[2]);
+							printf("element : %s\n", lconflits->data);
+							opt=getchar();
+
+							switch (opt) {
+								case '1': 	
+											insererFirst(lCurbranch, buildCell(lconflits->data));
+											lconflits=lconflits->next;
+											break;
+								case '2': 	
+											insererFirst(lRemote, buildCell(lconflits->data));
+											lconflits=lconflits->next;
+											break;
+								default: 
+											printf("argument non valide; tappez 1 ou 2\n"); 
+											break;
+							}
+						}
+
+						createDeletionCommit(curBranch, lCurbranch, message);
+						freeList(lCurbranch);
+						createDeletionCommit(argv[2], lRemote, message);
+						freeList(lRemote);
+						merge(argv[2], message);
+
+						break;
+			default: printf("option invalide : annulation du merge\n"); return 9;
+			}
+
+			return 0;
+		}
+	
+
 	}else if(argc==2){
 		/*
 		cas possibles: 
