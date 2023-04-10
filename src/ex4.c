@@ -49,16 +49,10 @@ char* wfts(WorkFile* wf){
     if(!wf) return NULL;
     if(! (wf->hash && wf->name)) return NULL;
 
-
-    char mode[4];
-
-    snprintf(mode, 3, "%o", wf->mode);
-    mode[3]= '\0';
-
     unsigned length_name = strnlen(wf->name, 256), length_hash= strlen(wf->hash);
 
     char * ret = malloc((length_hash+length_name+6)* sizeof(char));
-    snprintf(ret, length_hash+length_name+5, "%s\t%s\t%s" , wf->name, wf->hash, mode);
+    snprintf(ret, length_hash+length_name+5, "%s\t%s\t%o" , wf->name, wf->hash, wf->mode);
 
     return ret;
 }//teste ; ok
@@ -70,7 +64,8 @@ WorkFile* stwf(const char* ch){
     if(!ch) return NULL;
 
     char name[256], hash[256];
-    int mode;
+    unsigned mode;
+
     sscanf(ch, "%255s\t%255s\t%o", name, hash , &mode );
 
     WorkFile* ret= createWorkFile(name);
@@ -147,15 +142,10 @@ char* wfts_VAR(WorkFile* wf){
     if(!wf) return NULL;
     if(! (wf->hash && wf->name)) return NULL;
 
-    char mode[4];
-    memset(mode, 0, 4);
-    snprintf(mode, 3, "%o", wf->mode);
-    
-
     unsigned length_name = strnlen(wf->name, 256), length_hash= strlen(wf->hash);
 
     char * ret = malloc((length_hash+length_name+7)* sizeof(char));
-    snprintf(ret, length_hash+length_name+6, "%s\t%s\t%s\n" , wf->name, wf->hash, mode);
+    snprintf(ret, length_hash+length_name+6, "%s\t%s\t%o\n" , wf->name, wf->hash, wf->mode);
 
     return ret;
 }//teste ; ok
@@ -205,7 +195,7 @@ WorkTree * wt_from_string( char * str){
     WorkTree * ret = initWorkTree();
     char  name[256]; 
     char  hash[256]; 
-    int mode;
+    unsigned mode;
 
     while(curTok){
         sscanf(curTok, "%255s\t%255s\t%o", name, hash, &mode);
@@ -257,7 +247,7 @@ WorkTree * ftwt( char * file){
 
     char name[256]; 
     char hash[256]; 
-    int mode ;
+    unsigned mode ;
 
     while(fgets(line, 1024, f)){
 
