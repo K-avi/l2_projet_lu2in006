@@ -225,6 +225,6 @@ void myGitCommit(char *branch_name, char *message){
     free(hashPredecessor);
     free(pathSavedTree);
     freeWorkTree(wt);
-    remove(".add"); //supprimer .add
+    remove(".refs/.add"); //supprimer .add
 
 }//teste semble ok!!!!!!!

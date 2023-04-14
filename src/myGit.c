@@ -44,7 +44,7 @@ int main(int argc, char ** argv){
 		for(int i=2; i<argc; i++){
 			myGitAdd(argv[i]);
 		}
-	}else if(!strcmp(argv[1], "merge")){//q11.4 ; pas teste
+	}else if(!strcmp(argv[1], "merge")){//q11.4 ; 
 		char* message=NULL;
 		if(argc==4){	
 			message=argv[2];
@@ -208,7 +208,7 @@ int main(int argc, char ** argv){
 				return 7;
 
 			}else{
-				printf("refpath %s\n", refpath);
+				//printf("refpath %s\n", refpath);
 				remove(refpath); 
 				free(refpath);
 				return 0;

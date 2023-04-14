@@ -482,8 +482,14 @@ freeWorkTree(wt_ex5);
 
     myGitCommit("test", "test :ex11.2");
 */
-    List * l = merge("test", "plz work");
+ /*   List * l = merge("test", "plz work");
     if(l) freeList(l);
+*/
 
+    WorkTree * wt =initWorkTree();
+    appendWorkTree(wt, "test", "comment", 777);
+    appendWorkTree(wt, "test1", "poruqoi", 777);
+
+    wttf(wt, "testwt");
     return 0;
 }

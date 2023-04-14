@@ -317,8 +317,8 @@ List* merge(char* remote_branch, char* message){
 void createDeletionCommit(char* branch, List* conflicts, char* message){
 
     /*
-    renvoie null is branch est null; 
-    accepte pointeur null pour List (cas ou rien n'est dedans?)
+    ne fait rien si branch est null; 
+    accepte pointeur null pour List (cas ou rien n'est dedans)
     */
     if(!branch ) return;
 
@@ -395,5 +395,4 @@ void createDeletionCommit(char* branch, List* conflicts, char* message){
     myGitCommit(branch, message);//effectue le commit 
 
     myGitCheckoutBranch(currentBranch);//revient sur la branche de depart
-}//pas teste 
-//a l'aide jpp de ce truc c'est infame 
+}//teste; semble ok ; peut etre faire plus de tests depuis le main

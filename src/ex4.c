@@ -144,8 +144,8 @@ char* wfts_VAR(WorkFile* wf){
 
     unsigned length_name = strnlen(wf->name, 256), length_hash= strlen(wf->hash);
 
-    char * ret = malloc((length_hash+length_name+7)* sizeof(char));
-    snprintf(ret, length_hash+length_name+6, "%s\t%s\t%o\n" , wf->name, wf->hash, wf->mode);
+    char * ret = malloc((length_hash+length_name+8)* sizeof(char));
+    snprintf(ret, length_hash+length_name+8, "%s\t%s\t%o\n" , wf->name, wf->hash, wf->mode);
 
     return ret;
 }//teste ; ok
@@ -215,6 +215,7 @@ int wttf(WorkTree * wt , char * file){
     if(!f) return -1; 
 
     char * wt_string  = wtts(wt);
+   
     if(!wt_string) {
         fclose(f);
         return -1; 
