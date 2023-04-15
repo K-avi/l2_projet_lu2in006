@@ -250,6 +250,5 @@ void restoreWorkTree(WorkTree *wt, char *path){
         }
         free(path_hash);
     }   
-
     return;
 }//fini? teste; semble ok

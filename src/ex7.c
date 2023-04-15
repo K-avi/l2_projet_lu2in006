@@ -1,9 +1,11 @@
 #include "ex7.h"
 
 #include "ex1.h"
+#include "ex3.h"
 #include "ex4.h"
 #include "ex5.h"
 #include "ex6.h"
+#include "ex8.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -187,18 +189,49 @@ void myGitCommit(char *branch_name, char *message){
          free(refs_branch_name);
         return;
     }
-    free(refBranch);
+
     free(refHead);
     free(refs_branch_name);
     //charger le wt correspondant a .add
     
     WorkTree* wt = ftwt(".refs/.add");
+    
+    //recupere worktree du commit precedent si il existe
+    if(strcmp(refBranch, " ")){
 
-    //adapter a .add 
-   
+        char * commitPath = hashToPathCommit(refBranch);
+        Commit * c = ftc(commitPath); //charge commit precedent
+printf("reached commit check in commit %s \n", commitPath);
+        if(c){ //verifie que le commit ! null
+
+           char * wtRef= commitGet(c, "tree") ; //recupere reference de l'arbre 
+printf("reached wtRef check in commit %s\n", wtRef);
+           if(wtRef){
+
+                char * wtPath = hashToPath(wtRef);
+                WorkTree * prevWt = ftwt(wtPath); //recupere worktree
+                if(prevWt){
+printf("reached prevwt \n");
+                    for(unsigned i=0; i<prevWt->n ; i++){ //ajoute les fichiers du commit precedent dans le nouveau commit
+printf("reached loop %u %s\n", i, prevWt->tab[i].name);
+                        if(inWorkTree(wt, prevWt->tab[i].name)==-1){ //verifie que le fichier n'est pas dans le nouveau wt
+                           printf("reached append condition %s\n", prevWt->tab[i].name);
+                            appendWorkTree(wt, prevWt->tab[i].name, prevWt->tab[i].hash, prevWt->tab[i].mode);
+                        }
+                    }
+                    freeWorkTree(prevWt);
+                }
+                free(wtPath);
+           }
+
+           freeCommit(c);
+        }
+        free(commitPath);
+    }
+    free(refBranch);
+    
     char * pathSavedTree=  saveWorkTree(wt, ".");
-    //printf("path SavedTree %s\n ", pathSavedTree);
-    //enregistrer un instantane de ce wt
+   
 
     Commit * c = createCommit(pathSavedTree);
 //mettre hash utiliser create commit

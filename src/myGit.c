@@ -208,7 +208,7 @@ int main(int argc, char ** argv){
 				return 7;
 
 			}else{
-				//printf("refpath %s\n", refpath);
+			
 				remove(refpath); 
 				free(refpath);
 				return 0;

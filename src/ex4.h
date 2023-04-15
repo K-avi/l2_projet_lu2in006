@@ -14,7 +14,7 @@ typedef struct {
     int n ;
 } WorkTree ;
 
-#define WTREE_SIZE 16 //ex4.4
+#define WTREE_SIZE 64 //ex4.4
 
 extern WorkFile* createWorkFile(const char* name); //ex4.1:
 

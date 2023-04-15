@@ -29,7 +29,6 @@ WorkTree* mergeWorkTrees(WorkTree* wt1, WorkTree* wt2, List** conflicts){
            
     */
     if(!conflicts) return NULL;
-    
     if (! (wt1 || wt2)) return NULL; //les 2 arbres sont NULL
     
     else if(wt1 && (!wt2)){  //seul wt1 n'est pas NULL
@@ -52,15 +51,7 @@ WorkTree* mergeWorkTrees(WorkTree* wt1, WorkTree* wt2, List** conflicts){
     //aucun des arbres n'est NULL
 
     WorkTree* ret= initWorkTree();
-    /*
-    technique utilisee pour savoir quels fichiers recuperer O( len(wt1) + len(wt2)^2 ) 
-    (la complexite est relativement catastrophique je trouve...)
-        -> creer un tableau skippedWT2 en parcourant wt1 pour savoir quels 
-            indexs creent des conflits et ne pas copier (et mettre leurs noms dans la liste)
-        -> puis prcourir wt2 en sautant les index a 1 dans skippedWT2 
-
-        ->liberer le tableau
-    */
+   
     int * skippedWT2 = (int*) calloc(wt2->n, sizeof(int));
 
     for (int i=0; i<wt1->n; i++){ 
@@ -98,7 +89,6 @@ WorkTree* mergeWorkTrees(WorkTree* wt1, WorkTree* wt2, List** conflicts){
 List* merge(char* remote_branch, char* message){
     /*
     ne fait rien si remote_branch est NULL 
-
     renvoie NULL et un message d'erreur si la fonction echoue a creer
     un Worktree* a partir de .current_branch 
     */
@@ -149,7 +139,6 @@ List* merge(char* remote_branch, char* message){
         /*
         cas ou le fichier de commit n'existe pas / plus ou n'a pas pu etre ouvert 
         */
-        
         fprintf(stderr,"erreur : impossible d'acceder au dernier commit\nannulation du merge.\n"); 
         return NULL;
     }
@@ -250,7 +239,7 @@ List* merge(char* remote_branch, char* message){
     freeWorkTree(CurWt);
     freeWorkTree(remote_wt);
 
-
+    printf("liste apres tentative de merge : %s , %p \n", (*ret)->data, (*ret)->next);
     if( (*ret)->next ){//un membre a ete ajoute : il y a au moins un conflit
         
         fprintf(stderr, "au moins un conflit a ete detecte: annulation du merge\n");
