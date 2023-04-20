@@ -201,21 +201,20 @@ void myGitCommit(char *branch_name, char *message){
 
         char * commitPath = hashToPathCommit(refBranch);
         Commit * c = ftc(commitPath); //charge commit precedent
-printf("reached commit check in commit %s \n", commitPath);
+
         if(c){ //verifie que le commit ! null
 
            char * wtRef= commitGet(c, "tree") ; //recupere reference de l'arbre 
-printf("reached wtRef check in commit %s\n", wtRef);
+
            if(wtRef){
 
                 char * wtPath = hashToPath(wtRef);
                 WorkTree * prevWt = ftwt(wtPath); //recupere worktree
                 if(prevWt){
-printf("reached prevwt \n");
+
                     for(unsigned i=0; i<prevWt->n ; i++){ //ajoute les fichiers du commit precedent dans le nouveau commit
-printf("reached loop %u %s\n", i, prevWt->tab[i].name);
                         if(inWorkTree(wt, prevWt->tab[i].name)==-1){ //verifie que le fichier n'est pas dans le nouveau wt
-                           printf("reached append condition %s\n", prevWt->tab[i].name);
+                          
                             appendWorkTree(wt, prevWt->tab[i].name, prevWt->tab[i].hash, prevWt->tab[i].mode);
                         }
                     }

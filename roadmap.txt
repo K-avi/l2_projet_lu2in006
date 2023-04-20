@@ -1,8 +1,0 @@
-
--> peut etre faire un truc a propos du stockage des instantannes (dangereux pcq il suffit que j'oublie d'updater a un endroit et tt le 
-projet pourrait etre ruine) 
-
-
--> sans doute lie au pb dans merge mais pas sur ; a verifier 
--> merge a un vrai probleme de detection de collisions 
-finir le pdf de compte rendu aussi
