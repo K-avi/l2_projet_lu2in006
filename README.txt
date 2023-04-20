@@ -12,3 +12,5 @@ the result on a repo and make it public.
 
 The project is published under the Unlicense so feel free to do whatever
 you want with it.
+
+PS: please note that the commits of the project as well as the comments / function documentation are all written in french due to it being a college project
