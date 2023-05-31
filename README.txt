@@ -1,3 +1,6 @@
+Warning : the current commit is broken and I'm not planning on fixing it at the moment. I might get back to it one day. 
+Older versions of the project are working but buggy (but lack a merge feature)
+
 This is the repo for a college project where I had to create 
 a git-like command line app. 
 The source files of the project are in the src/ directory. 
